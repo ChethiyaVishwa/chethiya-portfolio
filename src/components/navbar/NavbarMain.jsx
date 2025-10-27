@@ -21,7 +21,7 @@ const NavbarMain = () => {
   ];
 
   return (
-    <nav className="w-full fixed top-0 right-2 z-20 py-3 px-6 sm:px-8 md:px-12">
+    <nav className="w-full fixed top-0 left-0 right-0 z-20 py-3 px-6 sm:px-8 md:px-12">
       <div className="max-w-[1000px] mx-auto">
         <div className="flex justify-between items-center w-full bg-gradient-to-r from-gray-900 via-black to-gray-900 px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-5 rounded-full border-[0.5px] border-gradient-to-r from-cyan/30 via-red/50 to-cyan/30 shadow-lg relative overflow-hidden">
           {/* Subtle accent overlay */}

@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* ✅ PERF FIX: merged 3 font requests into 1 to reduce network round-trips */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Wet+Paint&display=swap');
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -8,12 +8,44 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
   overflow-x: hidden;
 }
 
 body {
-  @apply bg-black
+  background-color: #000000;
+}
+
+/* Cursor water-bubble trail (global) */
+.cursor-bubbles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998; /* below scroll-to-top (9999) */
+}
+
+.cursor-bubble {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(6,182,212,0.28) 45%, rgba(6,182,212,0.08) 70%, rgba(6,182,212,0.00) 100%);
+  box-shadow: 0 0 14px rgba(6, 182, 212, 0.30), 0 0 30px rgba(6, 182, 212, 0.16);
+  will-change: transform, opacity, filter;
+  animation: cursor-bubble-float var(--life-ms, 900ms) ease-out forwards;
+}
+
+@keyframes cursor-bubble-float {
+  0% {
+    transform: translate(-50%, -50%) translate(0px, 0px) scale(0.9);
+    filter: blur(0px);
+  }
+  60% {
+    transform: translate(-50%, -50%) translate(calc(var(--drift-x, 0px) * 0.7), calc(var(--rise-y, 60px) * -0.7)) scale(1.05);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--drift-x, 0px), calc(var(--rise-y, 60px) * -1)) scale(1.1);
+    opacity: 0;
+    filter: blur(0.6px);
+  }
 }
 
 /* Custom Animations for Home Section */
@@ -117,13 +149,13 @@ body {
       0 0 5px #06b6d4,
       0 0 10px #06b6d4,
       0 0 15px #06b6d4,
-      0 0 20px #ef4444;
+      0 0 20px #06b6d4;
   }
   50% { 
     text-shadow: 
-      0 0 10px #ef4444,
-      0 0 20px #ef4444,
-      0 0 30px #ef4444,
+      0 0 10px #06b6d4,
+      0 0 20px #06b6d4,
+      0 0 30px #06b6d4,
       0 0 40px #06b6d4;
   }
 }
@@ -215,7 +247,12 @@ body {
 }
 
 .animate-neon-glow {
-  animation: neon-glow 2s ease-in-out infinite;
+  animation: none;
+  text-shadow:
+    0 0 5px #06b6d4,
+    0 0 10px #06b6d4,
+    0 0 15px #06b6d4,
+    0 0 25px rgba(6, 182, 212, 0.6);
 }
 
 .animate-matrix-rain {
@@ -243,6 +280,62 @@ body {
   animation: gradient-shift 3s ease infinite;
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modern ripple ring animation */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.8;
+  }
+  60% {
+    transform: scale(1.5);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2.8s ease-out infinite;
+}
+
+/* Color glows for rings */
+.ring-glow-cyan {
+  box-shadow: 0 0 20px rgba(21, 209, 233, 0.6), 0 0 40px rgba(21, 209, 233, 0.35);
+}
+.ring-glow-red {
+  box-shadow: 0 0 20px rgba(255, 77, 77, 0.6), 0 0 40px rgba(255, 77, 77, 0.35);
+}
+.ring-glow-lightCyan {
+  box-shadow: 0 0 20px rgba(136, 229, 240, 0.6), 0 0 40px rgba(136, 229, 240, 0.35);
+}
+
 /* Staggered Animation Delays */
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }
@@ -262,4 +355,82 @@ body {
 .skill-bar {
   width: 0%;
   animation: skillBarFill 1.5s ease-out forwards;
+}
+
+/* Rubik Wet Paint Font Utility */
+.font-rubik-wet-paint {
+  font-family: "Rubik Wet Paint", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* --- Global Background Layers --- */
+
+/* 1. Endless Scrolling Grid — ✅ PERF FIX: shrunk to 200%, will-change for GPU layer */
+.grid-bg {
+  position: fixed;
+  inset: -50px;
+  width: calc(100% + 100px);
+  height: calc(100% + 100px);
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(10, 20, 50, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 20, 50, 0.04) 1px, transparent 1px);
+  animation: grid-move 25s linear infinite;
+  z-index: -4;
+  pointer-events: none;
+  will-change: transform;
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50px, -50px); }
+}
+
+/* ✅ PERF FIX: disable grid animation on mobile to save battery */
+@media (max-width: 768px) {
+  .grid-bg { animation: none; }
+}
+
+/* 2. Floating Glow Orbs */
+.orb-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -3;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  /* ✅ PERF FIX: reduced blur cost 80px→50px, will-change for GPU promotion */
+  filter: blur(50px);
+  opacity: 0.3;
+  animation: orb-float var(--duration, 15s) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.orb-1 { width: 350px; height: 350px; background: #04091a; top: -10%; left: -10%; --duration: 18s; opacity: 0.3; }
+.orb-2 { width: 400px; height: 400px; background: #02050f; bottom: -20%; right: -10%; --duration: 22s; opacity: 0.2; }
+.orb-3 { width: 280px; height: 280px; background: #010208; top: 40%; left: 40%; --duration: 25s; filter: blur(60px); opacity: 0.25; }
+
+@keyframes orb-float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-30px, 30px) scale(0.95); }
+}
+
+/* ✅ PERF FIX: disable orb animation on mobile */
+@media (max-width: 768px) {
+  .orb { animation: none; filter: blur(40px); }
+}
+
+/* 3. Static SVG Grain/Noise */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.02;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }

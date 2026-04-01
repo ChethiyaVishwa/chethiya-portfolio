@@ -1,6 +1,10 @@
 import React from 'react';
+import gsap from 'gsap';
+import { useTilt } from '../../hooks/useTilt';
 
 const EducationSection = () => {
+
+
   const educationData = [
     {
       id: 1,
@@ -8,7 +12,7 @@ const EducationSection = () => {
       institution: "Informatics Institute of Technology (IIT)",
       location: "Sri Lanka",
       year: "2025 - 2026",
-      gpa: "In Progress",
+      gpa: "Completed",
       description: "Advanced studies in artificial intelligence, machine learning, and data science. Gaining expertise in modern AI technologies and applications.",
       achievements: [
         "Specialized AI coursework",
@@ -115,24 +119,29 @@ const EducationSection = () => {
     }
   ];
 
+  const { handleMouseEnter, handleMouseMove, handleMouseLeave } = useTilt({
+    rotationIntensity: 2,
+    scale: 1.02
+  });
+
   return (
-    <section id="education" className="min-h-screen flex items-center px-4 py-16 sm:py-20 md:py-24 bg-gradient-to-tr from-black via-gray-900 to-gray-800 relative overflow-hidden">
+    <section id="education" className="min-h-screen flex items-center px-4 py-16 sm:py-20 md:py-24 bg-transparent dark:bg-transparent relative overflow-hidden transition-colors duration-300">
       {/* Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-red/5 via-transparent to-cyan/5"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan/5 via-transparent to-red/5"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-800/20 to-transparent"></div>
-      
+
       {/* Decorative Elements */}
-      <div className="absolute top-32 left-20 w-72 h-72 bg-red/8 rounded-full blur-3xl animate-pulse" style={{animationDuration: '4s'}}></div>
-      <div className="absolute bottom-32 right-20 w-64 h-64 bg-cyan/8 rounded-full blur-3xl animate-pulse" style={{animationDuration: '5s', animationDelay: '1s'}}></div>
-      <div className="absolute top-1/2 right-1/3 w-56 h-56 bg-gradient-to-l from-cyan/5 to-red/5 rounded-full blur-2xl"></div>
-      
+      <div className="absolute top-32 left-20 w-72 h-72 bg-cyan/8 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
+      <div className="absolute bottom-32 right-20 w-64 h-64 bg-red/8 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
+      <div className="absolute top-1/2 right-1/3 w-56 h-56 bg-gradient-to-l from-red/5 to-cyan/5 rounded-full blur-2xl"></div>
+
       <div className="max-w-7xl mx-auto w-full relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 sm:mb-20">
           <p className="text-red text-sm sm:text-base md:text-lg lg:text-xl font-semibold tracking-wider uppercase animate-text-reveal delay-100">
             Education
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white mt-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal leading-tight text-white mt-4 font-rubik-wet-paint">
             Academic{' '}
             <span className="text-red animate-neon-glow delay-300">Journey</span>
           </h2>
@@ -145,23 +154,35 @@ const EducationSection = () => {
         <div className="relative mb-16">
           {/* Timeline Line */}
           <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan via-red to-cyan"></div>
-          
-          <div className="space-y-12">
-            {educationData.map((education, index) => (
-              <div 
-                key={education.id}
-                className="relative flex items-start space-x-6 sm:space-x-8 animate-text-reveal"
-                style={{animationDelay: `${(index + 1) * 200}ms`}}
-              >
-                {/* Timeline Dot */}
-                <div className={`relative z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-${education.color} to-${education.color}/80 flex items-center justify-center border-4 border-black shadow-lg`}>
-                  <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-${education.color} animate-pulse`}></div>
-                </div>
 
-                {/* Education Card */}
-                <div className={`flex-1 bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 hover:border-${education.color}/30 transition-all duration-500 hover:shadow-lg hover:shadow-${education.color}/10 group relative overflow-hidden`}>
+          <div className="space-y-12">
+            {educationData.map((education, index) => {
+              const hoverClasses =
+                education.color === 'red'
+                  ? 'hover:border-red/30 hover:shadow-red/20'
+                  : 'hover:border-cyan/30 hover:shadow-cyan/10';
+
+              return (
+                <div
+                  key={education.id}
+                  className="relative flex items-start space-x-6 sm:space-x-8 animate-text-reveal"
+                  style={{ animationDelay: `${(index + 1) * 200}ms` }}
+                >
+                  {/* Timeline Dot */}
+                  <div className={`relative z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-${education.color} to-${education.color}/80 flex items-center justify-center border-4 border-black shadow-lg`}>
+                    <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-${education.color} animate-pulse`}></div>
+                  </div>
+
+                  {/* Education Card */}
+                  <div
+                    onMouseEnter={(e) => handleMouseEnter(e, `edu-${education.id}`)}
+                    onMouseMove={(e) => handleMouseMove(e, `edu-${education.id}`)}
+                    onMouseLeave={(e) => handleMouseLeave(e, `edu-${education.id}`)}
+                    className={`flex-1 bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 transition-all duration-500 hover:shadow-lg group relative overflow-hidden ${hoverClasses}`}
+                    style={{ transformStyle: 'preserve-3d' }}
+                  >
                   {/* Card Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4" style={{ transform: 'translateZ(20px)' }}>
                     <div>
                       <h3 className={`text-xl sm:text-2xl font-bold text-${education.color} mb-2 group-hover:scale-105 transition-transform duration-300`}>
                         {education.degree}
@@ -202,7 +223,8 @@ const EducationSection = () => {
                   <div className={`absolute inset-0 bg-gradient-to-r from-${education.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -213,35 +235,46 @@ const EducationSection = () => {
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {certifications.map((cert, index) => (
-              <div 
+              <div
                 key={cert.name}
-                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-4 sm:p-6 rounded-xl border border-gray-700/50 hover:border-cyan/40 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan/20 group cursor-pointer"
-                style={{ animationDelay: `${1200 + (index * 100)}ms` }}
+                onMouseEnter={(e) => handleMouseEnter(e, `cert-${index}`)}
+                onMouseMove={(e) => handleMouseMove(e, `cert-${index}`)}
+                onMouseLeave={(e) => handleMouseLeave(e, `cert-${index}`)}
+                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-4 sm:p-6 rounded-xl border border-gray-700/50 hover:border-cyan/40 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan/20 cursor-pointer"
+                style={{
+                  animationDelay: `${1200 + (index * 100)}ms`,
+                  transformStyle: 'preserve-3d'
+                }}
               >
                 <div className="text-center">
-                  <div className="text-3xl sm:text-4xl mb-3 group-hover:animate-bounce">
+                  <div className="text-3xl sm:text-4xl mb-3" style={{ transform: 'translateZ(20px)' }}>
                     {cert.icon}
                   </div>
-                  <h4 className="text-white font-semibold text-sm sm:text-base mb-2 group-hover:text-cyan transition-colors">
+                  <h4 className="text-white font-semibold text-sm sm:text-base mb-2 group-hover:text-cyan transition-colors" style={{ transform: 'translateZ(30px)' }}>
                     {cert.name}
                   </h4>
-                  <p className="text-white text-xs sm:text-sm mb-1">
+                  <p className="text-white text-xs sm:text-sm mb-1" style={{ transform: 'translateZ(20px)' }}>
                     {cert.issuer}
                   </p>
                   {cert.description && (
-                    <p className="text-white text-xs mb-2 leading-relaxed">
+                    <p className="text-white text-xs mb-2 leading-relaxed" style={{ transform: 'translateZ(20px)' }}>
                       {cert.description}
                     </p>
                   )}
                   {cert.contact && (
-                    <p className="text-cyan text-xs mb-2">
+                    <p className="text-cyan text-xs mb-2" style={{ transform: 'translateZ(20px)' }}>
                       {cert.contact}
                     </p>
                   )}
-                  <p className="text-cyan text-xs font-medium">
+                  <p className="text-cyan text-xs font-medium" style={{ transform: 'translateZ(20px)' }}>
                     {cert.year}
                   </p>
                 </div>
+                {/* Glass sheen effect */}
+                <div
+                  className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-xl"
+                  style={{ transform: 'translateZ(1px)' }}
+                ></div>
               </div>
             ))}
           </div>

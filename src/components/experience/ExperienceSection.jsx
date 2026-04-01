@@ -1,14 +1,21 @@
 import React from 'react';
+import gsap from 'gsap';
+import { useTilt } from '../../hooks/useTilt';
 
 const ExperienceSection = () => {
+  const { handleMouseEnter, handleMouseMove, handleMouseLeave } = useTilt({
+    rotationIntensity: 2,
+    scale: 1.02
+  });
+
   const experiences = [
     {
       id: 1,
-      title: "Web Developer",
+      title: "Full Stack Web Developer",
       company: "Adventure Travel",
       location: "Sri Lanka",
-      period: "2024 - Present",
-      type: "Full-time",
+      period: "2025 - Present",
+      type: "Own business",
       description: "Developing and maintaining web applications for travel management system. Working with modern web technologies to create user-friendly interfaces and robust backend systems.",
       technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "PHP", "MySQL"],
       achievements: [
@@ -21,16 +28,16 @@ const ExperienceSection = () => {
     },
     {
       id: 2,
-      title: "Intern Web Developer",
+      title: "Intern Full Stack Software Engineer",
       company: "SLT Mobitel",
       location: "Sri Lanka",
       period: "2024 - 2025",
       type: "Internship",
-      description: "Gained hands-on experience in web development through internship program. Worked on real-world projects including management systems and product information hubs.",
+      description: "Gained hands-on experience in full stack software engineering through internship program. Worked on real-world projects including management systems and product information hubs.",
       technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "PHP", "MySQL"],
       achievements: [
         "Developed SLT Mobitel Intern Management System",
-        "Created SLT Mobitel Product Info Hub",
+        "Developed SLT Mobitel Product Info Hub Management System",
         "Learned industry best practices and development workflows",
         "Contributed to team projects and gained valuable experience"
       ],
@@ -40,14 +47,25 @@ const ExperienceSection = () => {
 
   const projects = [
     {
+      id: 8,
+      name: "Media Converter Web App",
+      description: "A modern, browser-based media conversion platform supporting multiple formats, built with performance, privacy, and UX in mind. All processing runs entirely on the client using FFmpeg.wasm + WebAssembly, with no server-side uploads.",
+      image: "/images/media-converter.jpg",
+      technologies: ["React", "Vite", "FFmpeg.wasm", "WebAssembly", "JavaScript (ES6+)", "GSAP", "HTML5", "CSS3"],
+      features: ["MP4 → MP3", "MP3 → WAV", "WAV → MP3", "Video → GIF", "MP4 → WebM", "Video Compression", "Client-side processing", "Fully responsive UI"],
+      github: "#",
+      live: "https://chethiyavishwa.github.io/mp4-to-mp3-converter/",
+      color: "red"
+    },
+    {
       id: 1,
       name: "Adventure Travel",
       description: "A modern travel agency website with fully responsive design and comprehensive admin management system. Features complete tour package management, vehicle booking, destination guides, and real-time customer support with advanced AI integration.",
       image: "/images/adventure-travel.jpg",
       technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "MySQL", "PHP", "PHPMailer", "API Integration", "AI Chatbase"],
       features: ["Tour package manager", "Vehicle package manager", "Tour destinations & hotels", "Real-time chat support", "AI chatbot", "Fully admin management dashboard", "Mobile responsive design", "Map integration"],
-      github: "https://github.com/ChethiyaVishwa/adventure-travel",
-      live: "#",
+      github: "https://github.com/ChethiyaVishwa/Travel-Agency-Website",
+      live: "http://adventuretravels.wuaze.com",
       color: "cyan"
     },
     {
@@ -69,7 +87,7 @@ const ExperienceSection = () => {
       technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "MySQL", "PHP"],
       features: ["All product details manager", "Fully admin management website", "Mobile responsive design", "Product catalog system", "Inventory management", "Fashion category management"],
       github: "https://github.com/ChethiyaVishwa/nimzy-fashion-store",
-      live: "#",
+      live: "http://nimzy.wuaze.com",
       color: "cyan"
     },
     {
@@ -79,7 +97,7 @@ const ExperienceSection = () => {
       image: "/images/project1.jpg",
       technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "PHP", "MySQL"],
       features: ["Intern registration", "Progress tracking", "Document management", "Reporting system"],
-      github: "https://github.com/ChethiyaVishwa/slt-intern-management",
+      github: "https://github.com/ChethiyaVishwa/Intern-Management-System ",
       live: "#",
       color: "red"
     },
@@ -90,7 +108,7 @@ const ExperienceSection = () => {
       image: "/images/project2.jpg",
       technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "PHP", "MySQL"],
       features: ["Product catalog", "Search functionality", "Product details", "Responsive design"],
-      github: "https://github.com/ChethiyaVishwa/slt-product-hub",
+      github: "https://github.com/ChethiyaVishwa/Product-Info-hub-SLT-Mobitel-",
       live: "#",
       color: "cyan"
     },
@@ -119,23 +137,23 @@ const ExperienceSection = () => {
   ];
 
   return (
-    <section id="experience" className="min-h-screen flex items-center px-4 py-16 sm:py-20 md:py-24 bg-gradient-to-bl from-gray-800 via-black to-gray-900 relative overflow-hidden">
+    <section id="experience" className="min-h-screen flex items-center px-4 py-16 sm:py-20 md:py-24 bg-transparent relative overflow-hidden">
       {/* Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-l from-cyan/5 via-transparent to-red/5"></div>
+      <div className="absolute inset-0 bg-gradient-to-l from-red/5 via-transparent to-cyan/5"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-transparent via-gray-700/10 to-transparent"></div>
-      
+
       {/* Decorative Elements */}
-      <div className="absolute top-20 right-20 w-80 h-80 bg-cyan/8 rounded-full blur-3xl animate-pulse" style={{animationDuration: '4s'}}></div>
-      <div className="absolute bottom-20 left-20 w-72 h-72 bg-red/8 rounded-full blur-3xl animate-pulse" style={{animationDuration: '5s', animationDelay: '1s'}}></div>
-      <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-r from-red/5 to-cyan/5 rounded-full blur-2xl"></div>
-      
+      <div className="absolute top-20 right-20 w-80 h-80 bg-red/8 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
+      <div className="absolute bottom-20 left-20 w-72 h-72 bg-cyan/8 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
+      <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-r from-cyan/5 to-red/5 rounded-full blur-2xl"></div>
+
       <div className="max-w-7xl mx-auto w-full relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 sm:mb-20">
           <p className="text-red text-sm sm:text-base md:text-lg lg:text-xl font-semibold tracking-wider uppercase animate-text-reveal delay-100">
             Experience
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white mt-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal leading-tight text-white mt-4 font-rubik-wet-paint">
             Professional{' '}
             <span className="text-red animate-neon-glow delay-300">Journey</span>
           </h2>
@@ -149,13 +167,19 @@ const ExperienceSection = () => {
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-12 text-center animate-text-reveal delay-600">
             Work Experience
           </h3>
-          
+
           <div className="space-y-8">
             {experiences.map((exp, index) => (
-              <div 
+              <div
                 key={exp.id}
+                onMouseEnter={(e) => handleMouseEnter(e, exp.id)}
+                onMouseMove={(e) => handleMouseMove(e, exp.id)}
+                onMouseLeave={(e) => handleMouseLeave(e, exp.id)}
                 className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 hover:border-${exp.color}/30 transition-all duration-500 hover:shadow-lg hover:shadow-${exp.color}/10 group relative overflow-hidden animate-text-reveal`}
-                style={{animationDelay: `${(index + 1) * 200}ms`}}
+                style={{
+                  animationDelay: `${(index + 1) * 200}ms`,
+                  transformStyle: 'preserve-3d'
+                }}
               >
                 {/* Experience Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
@@ -187,7 +211,7 @@ const ExperienceSection = () => {
                   <h5 className="text-white font-semibold text-sm sm:text-base mb-3">Technologies Used:</h5>
                   <div className="flex flex-wrap gap-2">
                     {exp.technologies.map((tech, techIndex) => (
-                      <span 
+                      <span
                         key={techIndex}
                         className={`px-3 py-1 bg-gradient-to-r from-${exp.color}/20 to-${exp.color}/10 text-${exp.color} text-xs sm:text-sm rounded-full border border-${exp.color}/30 hover:scale-105 transition-transform duration-200`}
                       >
@@ -222,81 +246,104 @@ const ExperienceSection = () => {
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-12 text-center animate-text-reveal delay-1000">
             Featured Projects
           </h3>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10">
-            {projects.map((project, index) => (
-              <div 
-                key={project.id}
-                className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 rounded-2xl border border-gray-700/50 hover:border-${project.color}/30 transition-all duration-500 hover:shadow-lg hover:shadow-${project.color}/10 group relative overflow-hidden animate-text-reveal`}
-                style={{animationDelay: `${1200 + (index * 200)}ms`}}
-              >
+            {projects.map((project, index) => {
+              const hoverClasses =
+                project.color === 'red'
+                  ? 'hover:border-red/30 hover:shadow-red/20'
+                  : 'hover:border-cyan/30 hover:shadow-cyan/10';
+
+              return (
+                <div
+                  key={project.id}
+                  onMouseEnter={(e) => handleMouseEnter(e, `proj-${project.id}`)}
+                  onMouseMove={(e) => handleMouseMove(e, `proj-${project.id}`)}
+                  onMouseLeave={(e) => handleMouseLeave(e, `proj-${project.id}`)}
+                  className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 rounded-2xl border border-gray-700/50 transition-all duration-500 hover:shadow-lg group relative overflow-hidden animate-text-reveal ${hoverClasses}`}
+                  style={{
+                    animationDelay: `${1200 + (index * 200)}ms`,
+                    transformStyle: 'preserve-3d'
+                  }}
+                >
                 {/* Project Image/Video */}
                 <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl">
-                  {project.id === 1 ? (
-                    // Video preview for Adventure Travel project
-                    <video 
+                  {project.id === 8 ? (
+                    // Video preview for Media Converter Web App project
+                    <video
                       className="w-full h-full object-cover"
                       autoPlay
                       loop
                       muted
                       playsInline
                     >
-                      <source src="/images/adventure.mp4" type="video/mp4" />
+                      <source src={`${import.meta.env.BASE_URL}images/converter.mp4`} type="video/mp4" />
+                    </video>
+                  ) : project.id === 1 ? (
+                    // Video preview for Adventure Travel project
+                    <video
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    >
+                      <source src={`${import.meta.env.BASE_URL}images/adventure.mp4`} type="video/mp4" />
                     </video>
                   ) : project.id === 2 ? (
                     // Video preview for Sirasa Oil Centre project
-                    <video 
+                    <video
                       className="w-full h-full object-cover"
                       autoPlay
                       loop
                       muted
                       playsInline
                     >
-                      <source src="/images/sirasa.mp4" type="video/mp4" />
+                      <source src={`${import.meta.env.BASE_URL}images/sirasa.mp4`} type="video/mp4" />
                     </video>
                   ) : project.id === 3 ? (
                     // Video preview for NIMZY project
-                    <video 
+                    <video
                       className="w-full h-full object-cover"
                       autoPlay
                       loop
                       muted
                       playsInline
                     >
-                      <source src="/images/nimzy2.mp4" type="video/mp4" />
+                      <source src={`${import.meta.env.BASE_URL}images/nimzy2.mp4`} type="video/mp4" />
                     </video>
                   ) : project.id === 4 ? (
                     // Video preview for SLT Mobitel Intern Management project
-                    <video 
+                    <video
                       className="w-full h-full object-cover"
                       autoPlay
                       loop
                       muted
                       playsInline
                     >
-                      <source src="/images/intern.mp4" type="video/mp4" />
+                      <source src={`${import.meta.env.BASE_URL}images/intern.mp4`} type="video/mp4" />
                     </video>
                   ) : project.id === 5 ? (
                     // Video preview for SLT Mobitel Product Info Hub project
-                    <video 
+                    <video
                       className="w-full h-full object-cover"
                       autoPlay
                       loop
                       muted
                       playsInline
                     >
-                      <source src="/images/productinfo.mp4" type="video/mp4" />
+                      <source src={`${import.meta.env.BASE_URL}images/productinfo.mp4`} type="video/mp4" />
                     </video>
                   ) : project.id === 6 ? (
                     // Video preview for Movie Ticket Booking System project
-                    <video 
+                    <video
                       className="w-full h-full object-cover"
                       autoPlay
                       loop
                       muted
                       playsInline
                     >
-                      <source src="/images/film.mp4" type="video/mp4" />
+                      <source src={`${import.meta.env.BASE_URL}images/film.mp4`} type="video/mp4" />
                     </video>
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
@@ -314,7 +361,7 @@ const ExperienceSection = () => {
                   <h4 className={`text-xl sm:text-2xl font-bold text-${project.color} mb-3 group-hover:scale-105 transition-transform duration-300`}>
                     {project.name}
                   </h4>
-                  
+
                   <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
                     {project.description}
                   </p>
@@ -324,7 +371,7 @@ const ExperienceSection = () => {
                     <h5 className="text-white font-semibold text-sm mb-2">Technologies:</h5>
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech, techIndex) => (
-                        <span 
+                        <span
                           key={techIndex}
                           className={`px-2 py-1 bg-gradient-to-r from-${project.color}/20 to-${project.color}/10 text-${project.color} text-xs rounded-full border border-${project.color}/30`}
                         >
@@ -349,7 +396,7 @@ const ExperienceSection = () => {
 
                   {/* Project Links */}
                   <div className="flex gap-3">
-                    <a 
+                    <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -357,7 +404,7 @@ const ExperienceSection = () => {
                     >
                       View Code
                     </a>
-                    <a 
+                    <a
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -369,9 +416,10 @@ const ExperienceSection = () => {
                 </div>
 
                 {/* Hover Effect Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-r from-${project.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-r from-${project.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none`}></div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

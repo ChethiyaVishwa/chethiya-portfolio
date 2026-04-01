@@ -37,25 +37,36 @@ const HomeSection = () => {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 xl:gap-20 w-full">
           {/* Text Content */}
-            <div className="space-y-4 sm:space-y-6 text-white text-center lg:text-left">
-              <div className="space-y-2 sm:space-y-4">
-                <p className="text-red text-sm sm:text-base md:text-lg lg:text-xl font-semibold tracking-wider uppercase animate-text-reveal delay-100">
-                  Welcome to My Portfolio
-                </p>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight min-h-[80px] sm:min-h-[100px] md:min-h-[120px] lg:min-h-[140px]">
-                  Hi, I'm a{' '}
-                  <span className={`text-red animate-neon-glow inline-block ${
-                    isTyping ? 'animate-pulse opacity-50' : 'opacity-100 transition-opacity duration-300'
-                  }`}>
-                    {titles[currentTitleIndex]}
-                  </span>
-                </h1>
-                <p className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0 animate-text-reveal delay-500">
-                  Passionate about creating innovative solutions and building 
-                  impactful software that makes a difference. I specialize in 
-                  modern web technologies and clean, efficient code.
-                </p>
+          <div className="space-y-4 sm:space-y-6 text-white text-center lg:text-left">
+            <div className="space-y-1 sm:space-y-4">
+              <p className="text-red text-sm sm:text-base md:text-lg lg:text-xl font-semibold tracking-wider uppercase animate-text-reveal delay-100">
+                Welcome to My Portfolio
+              </p>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal leading-tight min-h-[40px] sm:min-h-[80px] md:min-h-[100px] lg:min-h-[120px]">
+                Hi, I'm{' '}
+                <span className="text-red animate-neon-glow font-rubik-wet-paint">Chethiya Vishwa.</span>
+              </h1>
+              <div className="mt-0 sm:mt-3 md:mt-4">
+                <span
+                  className={`inline-block relative text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ${isTyping
+                      ? 'opacity-0 scale-95 translate-y-2'
+                      : 'opacity-100 scale-100 translate-y-0'
+                    } transition-all duration-500 ease-out`}
+                  style={{
+                    background: 'linear-gradient(135deg, #06b6d4 0%, #ef4444 50%, #06b6d4 100%)',
+                    backgroundSize: '200% 200%',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    animation: isTyping ? 'none' : 'gradient-shift 3s ease infinite',
+                    textShadow: '0 0 30px rgba(6, 182, 212, 0.3), 0 0 60px rgba(239, 68, 68, 0.2)',
+                    filter: 'drop-shadow(0 0 8px rgba(6, 182, 212, 0.4))'
+                  }}
+                >
+                  {titles[currentTitleIndex]}
+                </span>
               </div>
+            </div>
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 lg:gap-5 mt-6 sm:mt-8 mb-3 sm:mb-4 justify-center lg:justify-start">

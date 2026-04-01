@@ -434,3 +434,59 @@ body {
   opacity: 0.02;
   background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
+/* =====================================================
+   MOBILE PERFORMANCE OPTIMISATIONS
+   Applied only on coarse-pointer (touch) devices.
+   Design is UNCHANGED on desktop.
+   ===================================================== */
+@media (pointer: coarse) {
+
+  /* 1. Kill expensive CSS animations that run in infinite loops.
+        These are pure GPU waste when there's no hover interaction. */
+  .animate-particle,
+  .animate-float,
+  .animate-morphing,
+  .animate-liquid-morph,
+  .animate-hologram,
+  .animate-glitch,
+  .animate-pulse-ring {
+    animation: none !important;
+  }
+
+  /* animate-pulse used on many decorative dots — slow it way down instead of kill */
+  .animate-pulse {
+    animation-duration: 6s !important;
+  }
+
+  /* 2. backdrop-blur is the single most expensive CSS property on mobile GPUs.
+        Reduce to a cheaper value that still looks fine. */
+  .backdrop-blur-md,
+  .backdrop-blur-sm,
+  .backdrop-blur-2xl,
+  .backdrop-blur-xl,
+  [class*="backdrop-blur"] {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+
+  /* 3. SVG filter (glow) in ScrollProgress is expensive on mobile — remove it */
+  circle[filter] {
+    filter: none !important;
+  }
+
+  /* 4. Disable the 3D Spline viewer on mobile — WebGL on mobile = lag & battery drain */
+  spline-viewer {
+    display: none !important;
+  }
+
+  /* 5. Switch spinning placeholder (shown when spline hidden) to a static circle */
+  .animate-spin {
+    animation: none !important;
+    border-color: rgba(6,182,212,0.3) !important;
+  }
+
+  /* 6. Reduce will-change overuse — forces GPU layers which take memory */
+  .orb {
+    will-change: auto !important;
+  }
+}

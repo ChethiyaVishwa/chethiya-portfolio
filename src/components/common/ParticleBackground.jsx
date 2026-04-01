@@ -1,6 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 
+// Skip particles entirely on touch/coarse-pointer devices (phones, tablets)
+// The RAF loop + canvas draw is one of the biggest battery/perf drains on mobile
+const isCoarsePointer =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(pointer: coarse)').matches;
+
 const ParticleBackground = () => {
+  // Bail out immediately — don't even mount the canvas on mobile
+  if (isCoarsePointer) return null;
   const canvasRef = useRef(null);
 
   useEffect(() => {

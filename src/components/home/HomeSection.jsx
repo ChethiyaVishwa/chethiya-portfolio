@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+// Detect touch/coarse device once — video autoplay is very heavy on mobile
+const isCoarsePointer =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(pointer: coarse)').matches;
+
 const HomeSection = () => {
   const titles = [
     "Software Engineer",
@@ -26,17 +31,19 @@ const HomeSection = () => {
 
   return (
     <section id="home" className="min-h-[85vh] flex items-center px-4 sm:px-6 md:px-10 lg:px-16 pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-16 sm:pb-16 md:pb-20 lg:pb-24 relative">
-      {/* Video Background */}
+      {/* Video Background — skipped on mobile to avoid video decode overhead */}
       <div className="absolute inset-0 w-full h-full z-0 bg-black">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-60 mix-blend-luminosity"
-        >
-          <source src={`${import.meta.env.BASE_URL}images/section-bg6.mp4`} type="video/mp4" />
-        </video>
+        {!isCoarsePointer && (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-60 mix-blend-luminosity"
+          >
+            <source src={`${import.meta.env.BASE_URL}images/section-bg6.mp4`} type="video/mp4" />
+          </video>
+        )}
         {/* Deep Navy/Black Color Grade Overlay to match the new dark theme */}
         <div className="absolute inset-0 bg-[#04091a]/70 mix-blend-multiply"></div>
         <div className="absolute inset-0 bg-[rgba(10,20,50,0.4)] mix-blend-color"></div>

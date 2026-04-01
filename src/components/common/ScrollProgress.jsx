@@ -6,23 +6,25 @@ const ScrollProgress = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
-            setScrollProgress(scrollPercent);
+    let rafScheduled = false;
 
-            if (scrollTop > 20) {
-                setIsVisible(true);
-            } else {
-                setIsVisible(false);
-            }
-        };
+    const handleScroll = () => {
+      if (rafScheduled) return;   // already one queued — skip
+      rafScheduled = true;
+      requestAnimationFrame(() => {
+        rafScheduled = false;
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+        setScrollProgress(scrollPercent);
+        setIsVisible(scrollTop > 20);
+      });
+    };
 
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
 
-        return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const scrollToTop = () => {

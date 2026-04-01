@@ -1,7 +1,18 @@
 import { useCallback, useRef } from 'react';
 import gsap from 'gsap';
 
+// Detect touch devices once at module load — no GSAP tilt needed on mobile/tablet
+const isCoarsePointer =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(pointer: coarse)').matches;
+
+const noop = () => {};
+
 export const useTilt = (options = {}) => {
+  // Early-exit: return no-ops on touch devices to avoid pointless GSAP overhead
+  if (isCoarsePointer) {
+    return { handleMouseEnter: noop, handleMouseMove: noop, handleMouseLeave: noop };
+  }
     const {
         rotationIntensity = 3,
         scale = 1.02,

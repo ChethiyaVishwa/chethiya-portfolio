@@ -29,6 +29,8 @@ const SkillsSection = () => {
       skills: [
         { name: "PHP", level: 85 },
         { name: "Python", level: 80 },
+        { name: "Node.js", level: 80 },
+        { name: "MongoDB", level: 75 },
         { name: "Java", level: 75 },
         { name: "C#", level: 70 },
         { name: "MySQL", level: 85 },
@@ -40,6 +42,7 @@ const SkillsSection = () => {
       color: "cyan",
       skills: [
         { name: "VS Code", level: 95 },
+        { name: "Antigravity", level: 90 },
         { name: "Cursor", level: 90 },
         { name: "Firebase", level: 75 },
         { name: "Apache NetBeans", level: 70 },
@@ -70,6 +73,9 @@ const SkillsSection = () => {
   const tools = [
     { name: "VS Code", icon: skillicon("vscode") },
     { name: "Cursor", icon: "https://www.cursor.com/favicon.ico" },
+    { name: "Antigravity", icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230f172a'/%3E%3Ctext x='50' y='76' font-family='Arial Black,sans-serif' font-size='70' font-weight='900' text-anchor='middle' fill='%2306b6d4'%3EA%3C/text%3E%3C/svg%3E" },
+    { name: "Node.js", icon: skillicon("nodejs") },
+    { name: "MongoDB", icon: skillicon("mongodb") },
     { name: "Firebase", icon: devicon("firebase") },
     { name: "Apache NetBeans", icon: devicon("netbeans") },
     { name: "Visual Studio", icon: skillicon("visualstudio") },
@@ -122,42 +128,42 @@ const SkillsSection = () => {
                 className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 transition-all duration-500 hover:shadow-lg relative overflow-hidden group ${hoverColorClasses}`}
                 style={{ transformStyle: 'preserve-3d' }}
               >
-              {/* Category Header */}
-              <div className="flex items-center mb-6">
-                <div className={`w-3 h-3 rounded-full bg-${category.color} mr-3 animate-pulse`}></div>
-                <h3 className={`text-xl sm:text-2xl font-bold text-${category.color} animate-text-reveal`} style={{ animationDelay: `${(categoryIndex + 1) * 200}ms` }}>
-                  {category.title}
-                </h3>
-              </div>
+                {/* Category Header */}
+                <div className="flex items-center mb-6">
+                  <div className={`w-3 h-3 rounded-full bg-${category.color} mr-3 animate-pulse`}></div>
+                  <h3 className={`text-xl sm:text-2xl font-bold text-${category.color} animate-text-reveal`} style={{ animationDelay: `${(categoryIndex + 1) * 200}ms` }}>
+                    {category.title}
+                  </h3>
+                </div>
 
-              {/* Skills List */}
-              <div className="space-y-4">
-                {category.skills.map((skill, skillIndex) => (
-                  <div key={skill.name} className="group/skill">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-white font-medium text-sm sm:text-base">
-                        {skill.name}
-                      </span>
-                      <span className={`text-${category.color} text-sm font-semibold`}>
-                        {skill.level}%
-                      </span>
+                {/* Skills List */}
+                <div className="space-y-4">
+                  {category.skills.map((skill, skillIndex) => (
+                    <div key={skill.name} className="group/skill">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-white font-medium text-sm sm:text-base">
+                          {skill.name}
+                        </span>
+                        <span className={`text-${category.color} text-sm font-semibold`}>
+                          {skill.level}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                        <div
+                          className={`h-full bg-gradient-to-r from-${category.color} to-${category.color}/80 rounded-full transition-all duration-1000 ease-out group-hover/skill:shadow-lg group-hover/skill:shadow-${category.color}/30 skill-bar`}
+                          style={{
+                            width: `${skill.level}%`,
+                            animationDelay: `${(categoryIndex * 200) + (skillIndex * 100)}ms`
+                          }}
+                        ></div>
+                      </div>
                     </div>
-                    <div className="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
-                      <div
-                        className={`h-full bg-gradient-to-r from-${category.color} to-${category.color}/80 rounded-full transition-all duration-1000 ease-out group-hover/skill:shadow-lg group-hover/skill:shadow-${category.color}/30 skill-bar`}
-                        style={{
-                          width: `${skill.level}%`,
-                          animationDelay: `${(categoryIndex * 200) + (skillIndex * 100)}ms`
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              {/* Hover Effect Overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-r from-${category.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
-            </div>
+                {/* Hover Effect Overlay */}
+                <div className={`absolute inset-0 bg-gradient-to-r from-${category.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
+              </div>
             );
           })}
         </div>

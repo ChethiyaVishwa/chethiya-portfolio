@@ -47,6 +47,26 @@ const ExperienceSection = () => {
 
   const projects = [
     {
+      id: 9,
+      name: "Enterprise Resource Planning (ERP) System",
+      description: "A scalable ERP system for SMEs and large enterprises, unifying inventory, sales, and HR management with real-time dashboards, role-based access, and automated reporting — built to fit any industry. Powered by React, Node.js, and MySQL for a fast, reliable, and modern experience.",
+      image: "/images/online_erp.jpg",
+      technologies: ["React", "Vite", "CSS", "React Router DOM", "Node.js", "Express.js", "MySQL", "JWT", "bcrypt"],
+      features: [
+        "Inventory management",
+        "Sales management",
+        "Employee management",
+        "Admin / Staff authentication",
+        "KPIs (Revenue, Orders, Stock)",
+        "Sales reports",
+        "Inventory alerts",
+        "Role-based access"
+      ],
+      github: "https://github.com/ChethiyaVishwa/Online_Business_ERP_System-",
+      live: "#",
+      color: "cyan"
+    },
+    {
       id: 8,
       name: "Media Converter Web App",
       description: "A modern, browser-based media conversion platform supporting multiple formats, built with performance, privacy, and UX in mind. All processing runs entirely on the client using FFmpeg.wasm + WebAssembly, with no server-side uploads.",
@@ -268,7 +288,18 @@ const ExperienceSection = () => {
                 >
                 {/* Project Image/Video */}
                 <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl">
-                  {project.id === 8 ? (
+                  {project.id === 9 ? (
+                    // Video preview for ERP System project
+                    <video
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    >
+                      <source src={`${import.meta.env.BASE_URL}images/Online_ERP.mp4`} type="video/mp4" />
+                    </video>
+                  ) : project.id === 8 ? (
                     // Video preview for Media Converter Web App project
                     <video
                       className="w-full h-full object-cover"

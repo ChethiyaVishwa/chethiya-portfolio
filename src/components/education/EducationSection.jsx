@@ -8,6 +8,22 @@ const EducationSection = () => {
   const educationData = [
     {
       id: 1,
+      degree: "BSc (Hons) Information Technology for Business",
+      institution: "NIBM – Coventry University",
+      location: "Sri Lanka",
+      year: "2026 - Present",
+      gpa: "Ongoing",
+      description: "Bachelor's degree programme in Information Technology for Business, awarded by Coventry University (UK) and delivered through NIBM Sri Lanka. Covering enterprise systems, business analytics, software development, and IT management.",
+      achievements: [
+        "Enterprise IT & business systems",
+        "Business analytics & data management",
+        "Software engineering principles",
+        "IT project & resource management"
+      ],
+      color: "cyan"
+    },
+    {
+      id: 2,
       degree: "Professional Certificate in Artificial Intelligence",
       institution: "Informatics Institute of Technology (IIT)",
       location: "Sri Lanka",
@@ -20,10 +36,10 @@ const EducationSection = () => {
         "Industry-relevant AI applications",
         "Advanced data analysis techniques"
       ],
-      color: "cyan"
+      color: "red"
     },
     {
-      id: 2,
+      id: 3,
       degree: "Higher National Diploma in Software Engineering",
       institution: "National Institute of Business Management",
       location: "Sri Lanka",
@@ -36,10 +52,10 @@ const EducationSection = () => {
         "Project management methodologies",
         "Industry best practices"
       ],
-      color: "red"
+      color: "cyan"
     },
     {
-      id: 3,
+      id: 4,
       degree: "Diploma in Software Engineering",
       institution: "National Institute of Business Management",
       location: "Sri Lanka",
@@ -52,10 +68,10 @@ const EducationSection = () => {
         "Web development technologies",
         "Software development lifecycle"
       ],
-      color: "cyan"
+      color: "red"
     },
     {
-      id: 4,
+      id: 5,
       degree: "Certificate Courses in English",
       institution: "Aquinas College of Higher Studies",
       location: "Sri Lanka",
@@ -68,10 +84,10 @@ const EducationSection = () => {
         "Presentation skills development",
         "Professional communication"
       ],
-      color: "red"
+      color: "cyan"
     },
     {
-      id: 5,
+      id: 6,
       degree: "G.C.E A/L - Science Stream",
       institution: "Maliyadeva Model School (MMS)",
       location: "Sri Lanka",
@@ -84,7 +100,7 @@ const EducationSection = () => {
         "Analytical thinking skills",
         "Research and experimentation"
       ],
-      color: "cyan"
+      color: "red"
     }
   ];
 

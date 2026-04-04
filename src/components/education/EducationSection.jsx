@@ -1,6 +1,7 @@
 import React from 'react';
 import gsap from 'gsap';
 import { useTilt } from '../../hooks/useTilt';
+import { FaDiagramProject, FaMicrochip, FaTrophy, FaUserGraduate, FaCertificate, FaHandshake } from 'react-icons/fa6';
 
 const EducationSection = () => {
 
@@ -106,31 +107,45 @@ const EducationSection = () => {
 
   const certifications = [
     {
+      name: "Foundations of Project Management",
+      issuer: "Google (Coursera)",
+      year: "2026",
+      icon: <FaDiagramProject className="text-red mx-auto drop-shadow-[0_0_10px_rgba(239,68,68,0.7)]" />,
+      description: "Fundamental concepts of project management, project life cycles, and project management methodologies"
+    },
+    {
+      name: "Professional Certificate in Artificial Intelligence",
+      issuer: "Informatics Institute of Technology (IIT)",
+      year: "2025 - 2026",
+      icon: <FaMicrochip className="text-cyan mx-auto drop-shadow-[0_0_10px_rgba(6,182,212,0.7)]" />,
+      description: "Advanced studies in artificial intelligence, machine learning, and data science. Gaining expertise in modern AI technologies and applications."
+    },
+    {
       name: "Microsoft Learn Student Ambassador",
       issuer: "Microsoft Corporation",
       year: "2024",
-      icon: "🏆",
+      icon: <FaTrophy className="text-red mx-auto drop-shadow-[0_0_10px_rgba(239,68,68,0.7)]" />,
       description: "Full Stack Web Development with Next.js 14: From Concept to Azure Deployment"
     },
     {
       name: "Higher National Diploma in Software Engineering",
       issuer: "National Institute of Business Management",
       year: "2024 - 2025",
-      icon: "🎓",
+      icon: <FaUserGraduate className="text-cyan mx-auto drop-shadow-[0_0_10px_rgba(6,182,212,0.7)]" />,
       description: "Comprehensive software engineering program covering modern development practices and system design"
     },
     {
       name: "Diploma in Software Engineering",
       issuer: "National Institute of Business Management",
       year: "2022 - 2023",
-      icon: "📜",
+      icon: <FaCertificate className="text-red mx-auto drop-shadow-[0_0_10px_rgba(239,68,68,0.7)]" />,
       description: "Foundation program in software engineering covering programming fundamentals and web development"
     },
     {
       name: "Professional Reference",
       issuer: "Mr. Manjula Kulathunga, CEO, Wysheit Technologies",
       year: "2024",
-      icon: "👨‍💼",
+      icon: <FaHandshake className="text-cyan mx-auto drop-shadow-[0_0_10px_rgba(6,182,212,0.7)]" />,
       contact: "pmkkulathunga@gmail.com | +94 776200029"
     }
   ];
@@ -197,48 +212,48 @@ const EducationSection = () => {
                     className={`flex-1 bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 transition-all duration-500 hover:shadow-lg group relative overflow-hidden ${hoverClasses}`}
                     style={{ transformStyle: 'preserve-3d' }}
                   >
-                  {/* Card Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4" style={{ transform: 'translateZ(20px)' }}>
+                    {/* Card Header */}
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4" style={{ transform: 'translateZ(20px)' }}>
+                      <div>
+                        <h3 className={`text-xl sm:text-2xl font-bold text-${education.color} mb-2 group-hover:scale-105 transition-transform duration-300`}>
+                          {education.degree}
+                        </h3>
+                        <p className="text-white font-semibold text-lg sm:text-xl mb-1">
+                          {education.institution}
+                        </p>
+                        <p className="text-white text-sm sm:text-base">
+                          {education.location} • {education.year}
+                        </p>
+                      </div>
+                      <div className={`mt-2 sm:mt-0 px-4 py-2 bg-gradient-to-r from-${education.color}/20 to-${education.color}/10 rounded-full border border-${education.color}/30`}>
+                        <span className={`text-${education.color} font-bold text-sm sm:text-base`}>
+                          {education.gpa}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-white text-sm sm:text-base leading-relaxed mb-6">
+                      {education.description}
+                    </p>
+
+                    {/* Achievements */}
                     <div>
-                      <h3 className={`text-xl sm:text-2xl font-bold text-${education.color} mb-2 group-hover:scale-105 transition-transform duration-300`}>
-                        {education.degree}
-                      </h3>
-                      <p className="text-white font-semibold text-lg sm:text-xl mb-1">
-                        {education.institution}
-                      </p>
-                      <p className="text-white text-sm sm:text-base">
-                        {education.location} • {education.year}
-                      </p>
+                      <h4 className="text-white font-semibold text-sm sm:text-base mb-3">Key Achievements:</h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {education.achievements.map((achievement, achievementIndex) => (
+                          <li key={achievementIndex} className="flex items-center space-x-2 text-white text-xs sm:text-sm">
+                            <div className={`w-1.5 h-1.5 rounded-full bg-${education.color} flex-shrink-0`}></div>
+                            <span>{achievement}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <div className={`mt-2 sm:mt-0 px-4 py-2 bg-gradient-to-r from-${education.color}/20 to-${education.color}/10 rounded-full border border-${education.color}/30`}>
-                      <span className={`text-${education.color} font-bold text-sm sm:text-base`}>
-                        {education.gpa}
-                      </span>
-                    </div>
+
+                    {/* Hover Effect Overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-r from-${education.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
                   </div>
-
-                  {/* Description */}
-                  <p className="text-white text-sm sm:text-base leading-relaxed mb-6">
-                    {education.description}
-                  </p>
-
-                  {/* Achievements */}
-                  <div>
-                    <h4 className="text-white font-semibold text-sm sm:text-base mb-3">Key Achievements:</h4>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {education.achievements.map((achievement, achievementIndex) => (
-                        <li key={achievementIndex} className="flex items-center space-x-2 text-white text-xs sm:text-sm">
-                          <div className={`w-1.5 h-1.5 rounded-full bg-${education.color} flex-shrink-0`}></div>
-                          <span>{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Hover Effect Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-r from-${education.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
                 </div>
-              </div>
               );
             })}
           </div>

@@ -9,6 +9,10 @@ const HomeSection = () => {
   const titles = [
     "Software Engineer",
     "Web Developer",
+    "Data Analyst",
+    "Project Manager",
+    "Business Analyst",
+    "Prompt Engineer",
     "Content Creator"
   ];
 
@@ -65,12 +69,11 @@ const HomeSection = () => {
                 <span className="text-red animate-neon-glow font-rubik-wet-paint">Chethiya Vishwa.</span>
               </h1>
               <div className="mt-0 sm:mt-3 md:mt-4">
-                <span 
-                  className={`inline-block relative text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ${
-                    isTyping 
-                      ? 'opacity-0 scale-95 translate-y-2' 
+                <span
+                  className={`inline-block relative text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ${isTyping
+                      ? 'opacity-0 scale-95 translate-y-2'
                       : 'opacity-100 scale-100 translate-y-0'
-                  } transition-all duration-500 ease-out`}
+                    } transition-all duration-500 ease-out`}
                   style={{
                     background: 'linear-gradient(135deg, #06b6d4 0%, #ef4444 50%, #06b6d4 100%)',
                     backgroundSize: '200% 200%',
@@ -168,7 +171,7 @@ const HomeSection = () => {
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.18),transparent_55%),radial-gradient(circle_at_bottom,_rgba(248,113,113,0.18),transparent_55%)] opacity-80 mix-blend-screen"></div>
 
                   <img
-                    src={`${import.meta.env.BASE_URL}images/hexaPic8.png`}
+                    src={`${import.meta.env.BASE_URL}images/me2.jpg`}
                     alt="Software Engineer"
                     className="relative w-full h-auto rounded-[1.9rem] transform group-hover:scale-[1.03] group-hover:translate-y-0.5 transition-all duration-500"
                   />

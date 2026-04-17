@@ -5,8 +5,16 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: process.env.NODE_ENV === 'production' ? '/chethiya-portfolio/' : '/',
+  // ✅ PERF: pre-bundle GSAP so it doesn't cause a waterfall on first load
+  optimizeDeps: {
+    include: ['gsap', 'react-icons/io5', 'react-icons/hi'],
+  },
   build: {
-    // ✅ PERF FIX: split vendor chunks so browsers can cache React separately
+    // ✅ PERF: target modern browsers — avoids heavy polyfill/transform overhead
+    target: 'esnext',
+    // ✅ PERF: inline small assets (< 4 KB) as base64 to save round-trips
+    assetsInlineLimit: 4096,
+    // ✅ PERF: split vendor chunks so browsers can cache React separately
     rollupOptions: {
       output: {
         manualChunks: {
@@ -16,9 +24,9 @@ export default defineConfig({
         }
       }
     },
-    // ✅ PERF FIX: enable CSS code splitting
+    // ✅ PERF: enable CSS code splitting
     cssCodeSplit: true,
-    // ✅ PERF FIX: use terser-compatible minification for smaller output
+    // ✅ PERF: use terser-compatible minification for smaller output
     minify: 'esbuild',
   }
 });

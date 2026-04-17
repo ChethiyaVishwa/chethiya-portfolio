@@ -27,16 +27,16 @@ const ParticleBackground = () => {
 
     // ── Mouse ──────────────────────────────────────────────
     const onMouseMove = (e) => { mouse.x = e.clientX; mouse.y = e.clientY; };
-    const onMouseOut  = () => { mouse.x = -9999; mouse.y = -9999; };
+    const onMouseOut = () => { mouse.x = -9999; mouse.y = -9999; };
     window.addEventListener('mousemove', onMouseMove, { passive: true });
-    window.addEventListener('mouseout',  onMouseOut,  { passive: true });
+    window.addEventListener('mouseout', onMouseOut, { passive: true });
 
     // ── Resize ─────────────────────────────────────────────
     let resizeTimer;
     const onResize = () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
-        w = canvas.width  = window.innerWidth;
+        w = canvas.width = window.innerWidth;
         h = canvas.height = window.innerHeight;
         particles = [];
         init();
@@ -49,16 +49,16 @@ const ParticleBackground = () => {
       constructor() { this.reset(); }
 
       reset() {
-        this.x      = Math.random() * w;
-        this.y      = Math.random() * h;
-        this.vx     = (Math.random() - 0.5) * 0.7;
-        this.vy     = (Math.random() - 0.5) * 0.7;
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.vx = (Math.random() - 0.5) * 0.7;
+        this.vy = (Math.random() - 0.5) * 0.7;
         this.radius = Math.random() * 2 + 1;       // 1 – 3 px
         // Twinkling: each particle has its own phase & speed
         this.twinklePhase = Math.random() * Math.PI * 2;
         this.twinkleSpeed = 0.02 + Math.random() * 0.03;
         // Subtle color shift per particle (cyan ↔ slight violet)
-        this.hue   = 185 + Math.random() * 40;     // 185–225
+        this.hue = 185 + Math.random() * 40;     // 185–225
       }
 
       update() {
@@ -76,9 +76,9 @@ const ParticleBackground = () => {
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
         const distSq = dx * dx + dy * dy;
-        const rSq    = mouse.radius * mouse.radius;
+        const rSq = mouse.radius * mouse.radius;
         if (distSq < rSq && distSq > 0) {
-          const dist  = Math.sqrt(distSq);
+          const dist = Math.sqrt(distSq);
           const force = (mouse.radius - dist) / mouse.radius;
           this.x -= (dx / dist) * force * 2.5;
           this.y -= (dy / dist) * force * 2.5;
@@ -88,15 +88,15 @@ const ParticleBackground = () => {
       // Glowing dot with twinkling brightness
       draw() {
         const twinkle = 0.55 + 0.45 * Math.sin(this.twinklePhase);  // 0.1 – 1.0
-        const alpha   = twinkle;
+        const alpha = twinkle;
 
         // Outer glow (subtle halo)
         const glow = ctx.createRadialGradient(
           this.x, this.y, 0,
           this.x, this.y, this.radius * 3.5
         );
-        glow.addColorStop(0,   `hsla(${this.hue}, 80%, 60%, ${alpha * 0.18})`);
-        glow.addColorStop(1,   `hsla(${this.hue}, 80%, 60%, 0)`);
+        glow.addColorStop(0, `hsla(${this.hue}, 80%, 60%, ${alpha * 0.18})`);
+        glow.addColorStop(1, `hsla(${this.hue}, 80%, 60%, 0)`);
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius * 4, 0, Math.PI * 2);
         ctx.fillStyle = glow;
@@ -125,8 +125,8 @@ const ParticleBackground = () => {
       const len = particles.length;
       for (let i = 0; i < len; i++) {
         for (let j = i + 1; j < len; j++) {
-          const dx     = particles[i].x - particles[j].x;
-          const dy     = particles[i].y - particles[j].y;
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
           const distSq = dx * dx + dy * dy;
           if (distSq > MAX_DIST_SQ) continue;
 
@@ -135,8 +135,8 @@ const ParticleBackground = () => {
           // Opacity: fade to zero at MAX_DIST, brightest when close
           // Also add a gentle global pulse tied to time
           const proximity = 1 - dist / MAX_DIST;
-          const pulse     = 0.7 + 0.3 * Math.sin(time * 0.04 + i * 0.3);
-          const alpha     = proximity * proximity * 0.30 * pulse;  // softer falloff
+          const pulse = 0.7 + 0.3 * Math.sin(time * 0.04 + i * 0.3);
+          const alpha = proximity * proximity * 0.30 * pulse;  // softer falloff
 
           // Hue shifts between the two particles' hues for a gradient feel
           const hueAvg = (particles[i].hue + particles[j].hue) / 2;
@@ -164,10 +164,10 @@ const ParticleBackground = () => {
     function drawMouseLines() {
       const len = particles.length;
       for (let i = 0; i < len; i++) {
-        const dx     = particles[i].x - mouse.x;
-        const dy     = particles[i].y - mouse.y;
+        const dx = particles[i].x - mouse.x;
+        const dy = particles[i].y - mouse.y;
         const distSq = dx * dx + dy * dy;
-        const rSq    = mouse.radius * mouse.radius;
+        const rSq = mouse.radius * mouse.radius;
         if (distSq > rSq) continue;
 
         const proximity = 1 - Math.sqrt(distSq) / mouse.radius;
@@ -203,8 +203,8 @@ const ParticleBackground = () => {
 
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseout',  onMouseOut);
-      window.removeEventListener('resize',    onResize);
+      window.removeEventListener('mouseout', onMouseOut);
+      window.removeEventListener('resize', onResize);
       clearTimeout(resizeTimer);
       cancelAnimationFrame(rafId);
     };

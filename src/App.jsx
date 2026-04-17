@@ -1,16 +1,21 @@
 import './App.css'
-import { useMemo } from 'react';
+import { useMemo, lazy, Suspense } from 'react';
 import NavbarMain from './components/navbar/NavbarMain';
 import HomeSection from './components/home/HomeSection';
 import TextTickerDivider from './components/common/TextTickerDivider';
-import AboutSection from './components/about/AboutSection';
-import SkillsSection from './components/skills/SkillsSection';
-import EducationSection from './components/education/EducationSection';
-import ExperienceSection from './components/experience/ExperienceSection';
-import ContactSection from './components/contact/ContactSection';
 import ScrollProgress from './components/common/ScrollProgress';
 import CursorBubbles from './components/common/CursorBubbles';
 import GlobalBackground from './components/common/GlobalBackground';
+
+// ✅ PERF: lazy-load heavy sections — reduces initial JS bundle parsed on mobile
+const AboutSection = lazy(() => import('./components/about/AboutSection'));
+const SkillsSection = lazy(() => import('./components/skills/SkillsSection'));
+const EducationSection = lazy(() => import('./components/education/EducationSection'));
+const ExperienceSection = lazy(() => import('./components/experience/ExperienceSection'));
+const ContactSection = lazy(() => import('./components/contact/ContactSection'));
+
+// Minimal fallback — avoids layout shift while section JS loads
+const SectionFallback = () => <div className="min-h-screen bg-transparent" aria-hidden="true" />;
 
 // Detect touch/mobile device — cursor effects are pointless and costly on touch screens
 const isTouchDevice = () =>
@@ -30,11 +35,21 @@ function App() {
         <NavbarMain />
         <HomeSection />
         <TextTickerDivider />
-        <AboutSection />
-        <SkillsSection />
-        <EducationSection />
-        <ExperienceSection />
-        <ContactSection />
+        <Suspense fallback={<SectionFallback />}>
+          <AboutSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <SkillsSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <EducationSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <ExperienceSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <ContactSection />
+        </Suspense>
       </main>
       <ScrollProgress />
     </>

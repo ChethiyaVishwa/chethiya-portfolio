@@ -35,9 +35,19 @@ const HomeSection = () => {
 
   return (
     <section id="home" className="min-h-[85vh] flex items-center px-4 sm:px-6 md:px-10 lg:px-16 pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-16 sm:pb-16 md:pb-20 lg:pb-24 relative">
-      {/* Video Background — skipped on mobile to avoid video decode overhead */}
+      {/* Video Background — lightweight mobile video on touch, full video on desktop */}
       <div className="absolute inset-0 w-full h-full z-0 bg-black">
-        {!isCoarsePointer && (
+        {isCoarsePointer ? (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-60 mix-blend-luminosity"
+          >
+            <source src={`${import.meta.env.BASE_URL}images/section-bg-mobile.mp4`} type="video/mp4" />
+          </video>
+        ) : (
           <video
             autoPlay
             loop
@@ -52,10 +62,10 @@ const HomeSection = () => {
         <div className="absolute inset-0 bg-[#04091a]/70 mix-blend-multiply"></div>
         <div className="absolute inset-0 bg-[rgba(10,20,50,0.4)] mix-blend-color"></div>
       </div>
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-cyan/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-red/10 rounded-full blur-3xl"></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-cyan/5 to-red/5 rounded-full blur-2xl"></div>
+      {/* Decorative Elements — hidden on mobile to save GPU composite layers */}
+      <div className="hidden sm:block absolute top-20 left-10 w-72 h-72 bg-cyan/10 rounded-full blur-3xl"></div>
+      <div className="hidden sm:block absolute bottom-20 right-10 w-96 h-96 bg-red/10 rounded-full blur-3xl"></div>
+      <div className="hidden sm:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-cyan/5 to-red/5 rounded-full blur-2xl"></div>
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 xl:gap-20 w-full">
           {/* Text Content */}
@@ -70,20 +80,11 @@ const HomeSection = () => {
               </h1>
               <div className="mt-0 sm:mt-3 md:mt-4">
                 <span
-                  className={`inline-block relative text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ${isTyping
+                  className={`title-gradient inline-block relative text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ${
+                    isTyping
                       ? 'opacity-0 scale-95 translate-y-2'
-                      : 'opacity-100 scale-100 translate-y-0'
-                    } transition-all duration-500 ease-out`}
-                  style={{
-                    background: 'linear-gradient(135deg, #06b6d4 0%, #ef4444 50%, #06b6d4 100%)',
-                    backgroundSize: '200% 200%',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    animation: isTyping ? 'none' : 'gradient-shift 3s ease infinite',
-                    textShadow: '0 0 30px rgba(6, 182, 212, 0.3), 0 0 60px rgba(239, 68, 68, 0.2)',
-                    filter: 'drop-shadow(0 0 8px rgba(6, 182, 212, 0.4))'
-                  }}
+                      : `opacity-100 scale-100 translate-y-0 title-gradient--animating`
+                  } transition-all duration-500 ease-out`}
                 >
                   {titles[currentTitleIndex]}
                 </span>
@@ -161,7 +162,7 @@ const HomeSection = () => {
           <div className="relative mt-6 lg:mt-0 flex items-center justify-center lg:justify-end translate-y-2 sm:translate-y-1 md:translate-y-0 lg:translate-y-1 xl:translate-y-2">
             <div className="relative z-10 md:-translate-x-2 lg:-translate-x-3 xl:-translate-x-4 transition-transform duration-500">
               {/* Main Image Container with modern frame */}
-              <div className="relative group animate-float w-[220px] sm:w-[260px] md:w-[300px] lg:w-[320px] xl:w-[340px]">
+              <div className={`relative group ${isCoarsePointer ? '' : 'animate-float'} w-[220px] sm:w-[260px] md:w-[300px] lg:w-[320px] xl:w-[340px]`}>
                 {/* Outer neon gradient frame */}
                 <div className="pointer-events-none absolute -inset-1 sm:-inset-1.5 rounded-[2.2rem] bg-gradient-to-tr from-cyan via-red to-cyan opacity-70 group-hover:opacity-100 blur-md sm:blur-lg transition-all duration-500 group-hover:scale-[1.02]"></div>
 
@@ -182,12 +183,14 @@ const HomeSection = () => {
                 <div className="pointer-events-none absolute -top-6 -left-8 sm:-top-8 sm:-left-10 w-20 h-20 sm:w-28 sm:h-28 border border-red/35 rounded-3xl -rotate-6 group-hover:-translate-x-2 group-hover:translate-y-1 group-hover:-rotate-[12deg] transition-transform duration-500"></div>
               </div>
 
-              {/* Floating Particles */}
-              <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-cyan rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2s' }}></div>
-              <div className="absolute top-3/4 right-1/4 w-2.5 h-2.5 bg-red rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}></div>
-              <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-orange rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '3s', animationDelay: '1s' }}></div>
-              <div className="absolute top-1/3 right-1/5 w-1.5 h-1.5 bg-lightCyan rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2.2s', animationDelay: '0.3s' }}></div>
-              <div className="absolute bottom-1/3 left-1/5 w-1.5 h-1.5 bg-lightRed rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2.8s', animationDelay: '0.7s' }}></div>
+              {/* Floating Particles — hidden on mobile to save GPU compositing */}
+              <div className="hidden sm:block">
+                <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-cyan rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2s' }}></div>
+                <div className="absolute top-3/4 right-1/4 w-2.5 h-2.5 bg-red rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}></div>
+                <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-orange rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '3s', animationDelay: '1s' }}></div>
+                <div className="absolute top-1/3 right-1/5 w-1.5 h-1.5 bg-lightCyan rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2.2s', animationDelay: '0.3s' }}></div>
+                <div className="absolute bottom-1/3 left-1/5 w-1.5 h-1.5 bg-lightRed rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2.8s', animationDelay: '0.7s' }}></div>
+              </div>
 
               {/* Ripple rings removed */}
             </div>

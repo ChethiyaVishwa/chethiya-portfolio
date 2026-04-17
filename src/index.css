@@ -4,7 +4,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -20,14 +21,15 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 9998; /* below scroll-to-top (9999) */
+  z-index: 9998;
+  /* below scroll-to-top (9999) */
 }
 
 .cursor-bubble {
   position: absolute;
   transform: translate(-50%, -50%);
   border-radius: 9999px;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(6,182,212,0.28) 45%, rgba(6,182,212,0.08) 70%, rgba(6,182,212,0.00) 100%);
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.55), rgba(6, 182, 212, 0.28) 45%, rgba(6, 182, 212, 0.08) 70%, rgba(6, 182, 212, 0.00) 100%);
   box-shadow: 0 0 14px rgba(6, 182, 212, 0.30), 0 0 30px rgba(6, 182, 212, 0.16);
   will-change: transform, opacity, filter;
   animation: cursor-bubble-float var(--life-ms, 900ms) ease-out forwards;
@@ -38,9 +40,11 @@ body {
     transform: translate(-50%, -50%) translate(0px, 0px) scale(0.9);
     filter: blur(0px);
   }
+
   60% {
     transform: translate(-50%, -50%) translate(calc(var(--drift-x, 0px) * 0.7), calc(var(--rise-y, 60px) * -0.7)) scale(1.05);
   }
+
   100% {
     transform: translate(-50%, -50%) translate(var(--drift-x, 0px), calc(var(--rise-y, 60px) * -1)) scale(1.1);
     opacity: 0;
@@ -50,30 +54,67 @@ body {
 
 /* Custom Animations for Home Section */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes glow {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
 }
 
 @keyframes rotate-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes rotate-reverse {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
 }
 
 @keyframes particle-float {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  25% { transform: translateY(-5px) translateX(5px); }
-  50% { transform: translateY(-10px) translateX(0px); }
-  75% { transform: translateY(-5px) translateX(-5px); }
+
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+
+  25% {
+    transform: translateY(-5px) translateX(5px);
+  }
+
+  50% {
+    transform: translateY(-10px) translateX(0px);
+  }
+
+  75% {
+    transform: translateY(-5px) translateX(-5px);
+  }
 }
 
 .animate-float {
@@ -98,61 +139,76 @@ body {
 
 /* Modern Animation Styles */
 @keyframes morphing {
-  0%, 100% { 
+
+  0%,
+  100% {
     border-radius: 20px;
     transform: rotate(0deg) scale(1);
   }
-  25% { 
+
+  25% {
     border-radius: 50px;
     transform: rotate(90deg) scale(1.05);
   }
-  50% { 
+
+  50% {
     border-radius: 10px;
     transform: rotate(180deg) scale(0.95);
   }
-  75% { 
+
+  75% {
     border-radius: 30px;
     transform: rotate(270deg) scale(1.02);
   }
 }
 
 @keyframes glitch {
-  0%, 100% { 
+
+  0%,
+  100% {
     transform: translate(0);
     filter: hue-rotate(0deg);
   }
-  10% { 
+
+  10% {
     transform: translate(-2px, 2px);
     filter: hue-rotate(90deg);
   }
-  20% { 
+
+  20% {
     transform: translate(2px, -2px);
     filter: hue-rotate(180deg);
   }
-  30% { 
+
+  30% {
     transform: translate(-2px, -2px);
     filter: hue-rotate(270deg);
   }
-  40% { 
+
+  40% {
     transform: translate(2px, 2px);
     filter: hue-rotate(360deg);
   }
-  50% { 
+
+  50% {
     transform: translate(0);
     filter: hue-rotate(0deg);
   }
 }
 
 @keyframes neon-glow {
-  0%, 100% { 
-    text-shadow: 
+
+  0%,
+  100% {
+    text-shadow:
       0 0 5px #06b6d4,
       0 0 10px #06b6d4,
       0 0 15px #06b6d4,
       0 0 20px #06b6d4;
   }
-  50% { 
-    text-shadow: 
+
+  50% {
+    text-shadow:
       0 0 10px #06b6d4,
       0 0 20px #06b6d4,
       0 0 30px #06b6d4,
@@ -161,78 +217,93 @@ body {
 }
 
 @keyframes matrix-rain {
-  0% { 
+  0% {
     transform: translateY(-100vh);
     opacity: 0;
   }
-  10% { 
+
+  10% {
     opacity: 1;
   }
-  90% { 
+
+  90% {
     opacity: 1;
   }
-  100% { 
+
+  100% {
     transform: translateY(100vh);
     opacity: 0;
   }
 }
 
 @keyframes hologram {
-  0%, 100% { 
+
+  0%,
+  100% {
     opacity: 1;
     transform: perspective(1000px) rotateX(0deg);
   }
-  50% { 
+
+  50% {
     opacity: 0.8;
     transform: perspective(1000px) rotateX(5deg);
   }
 }
 
 @keyframes liquid-morph {
-  0%, 100% { 
+
+  0%,
+  100% {
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
     transform: rotate(0deg);
   }
-  25% { 
+
+  25% {
     border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
     transform: rotate(90deg);
   }
-  50% { 
+
+  50% {
     border-radius: 50% 30% 60% 50% / 30% 50% 60% 70%;
     transform: rotate(180deg);
   }
-  75% { 
+
+  75% {
     border-radius: 40% 70% 30% 60% / 70% 40% 60% 30%;
     transform: rotate(270deg);
   }
 }
 
 @keyframes magnetic-hover {
-  0% { 
+  0% {
     transform: translate(0, 0);
   }
-  100% { 
+
+  100% {
     transform: translate(var(--mouse-x, 0), var(--mouse-y, 0));
   }
 }
 
 @keyframes text-reveal {
-  0% { 
+  0% {
     clip-path: inset(0 100% 0 0);
   }
-  100% { 
+
+  100% {
     clip-path: inset(0 0% 0 0);
   }
 }
 
 @keyframes gradient-shift {
-  0% { 
+  0% {
     background-position: 0% 50%;
   }
-  50% { 
+
+  50% {
     background-position: 100% 50%;
   }
-  100% { 
+
+  100% {
     background-position: 0% 50%;
   }
 }
@@ -280,29 +351,115 @@ body {
   animation: gradient-shift 3s ease infinite;
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+/* ─── Title cycle gradient text ─────────────────────────────────────────────
+   Applied to the cycling role title in HomeSection.
+   Uses a solid color fallback so text is never invisible if background-clip
+   fails on a mobile browser (older Android WebView, Samsung Internet, etc.).
+   ─────────────────────────────────────────────────────────────────────────── */
+.title-gradient {
+  /* Fallback solid color — visible on ANY browser */
+  color: #06b6d4;
+  /* Gradient text when supported */
+  background: linear-gradient(135deg, #06b6d4 0%, #ef4444 50%, #06b6d4 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* Hint GPU to keep this layer ready for background-position changes */
+  will-change: background-position;
 }
 
+/* Active animation state — toggled via class (more reliable than inline style on mobile) */
+.title-gradient--animating {
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Safety: if -webkit-text-fill-color isn't supported, keep the solid fallback */
+@supports not (-webkit-text-fill-color: transparent) {
+  .title-gradient {
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+    -webkit-background-clip: unset;
+    background: none;
+    color: #06b6d4;
+  }
+}
+
+/* ─── Ticker / Running Banner ──────────────────────────────────────────────
+   Uses translate3d (not translateX) so ALL mobile browsers (iOS Safari,
+   Android Chrome, Samsung Internet) keep this animation on the GPU compositor
+   thread. The compositor thread is independent of the JS main thread — meaning
+   React re-renders, lazy loading, and scroll events CANNOT stutter this. 
+   ──────────────────────────────────────────────────────────────────────────── */
+/* Ticker keyframe: uses a CSS variable --ticker-w (set by JS to the exact pixel
+   width of one strip). Falls back to -50% if the variable isn't set yet.
+   Using calc()+px is more reliable than percentage on mobile browsers where
+   width:max-content on a flex container may compute incorrectly. */
+@-webkit-keyframes ticker-scroll {
+  0%   { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+  100% { -webkit-transform: var(--ticker-transform, translate3d(-50%, 0, 0)); }
+}
+@keyframes ticker-scroll {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: var(--ticker-transform, translate3d(-50%, 0, 0)); }
+}
+
+/* .ticker-track — intentionally NOT named animate-* so existing kill-lists skip it. */
+.ticker-track {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  width: -webkit-max-content;
+  width: max-content;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-animation: ticker-scroll 22s linear infinite;
+  animation: ticker-scroll 22s linear infinite;
+}
+
+/* Keep the old marquee rule for any other potential callers */
+@keyframes marquee {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
 .animate-marquee {
   width: max-content;
   animation: marquee 25s linear infinite;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideUpFade {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Modern ripple ring animation */
@@ -311,10 +468,12 @@ body {
     transform: scale(0.85);
     opacity: 0.8;
   }
+
   60% {
     transform: scale(1.5);
     opacity: 0.15;
   }
+
   100% {
     transform: scale(1.6);
     opacity: 0;
@@ -329,27 +488,57 @@ body {
 .ring-glow-cyan {
   box-shadow: 0 0 20px rgba(21, 209, 233, 0.6), 0 0 40px rgba(21, 209, 233, 0.35);
 }
+
 .ring-glow-red {
   box-shadow: 0 0 20px rgba(255, 77, 77, 0.6), 0 0 40px rgba(255, 77, 77, 0.35);
 }
+
 .ring-glow-lightCyan {
   box-shadow: 0 0 20px rgba(136, 229, 240, 0.6), 0 0 40px rgba(136, 229, 240, 0.35);
 }
 
 /* Staggered Animation Delays */
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
-.delay-600 { animation-delay: 0.6s; }
-.delay-700 { animation-delay: 0.7s; }
-.delay-800 { animation-delay: 0.8s; }
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+.delay-600 {
+  animation-delay: 0.6s;
+}
+
+.delay-700 {
+  animation-delay: 0.7s;
+}
+
+.delay-800 {
+  animation-delay: 0.8s;
+}
 
 /* Skill Bar Animation */
 @keyframes skillBarFill {
-  from { width: 0%; }
-  to { width: 100%; }
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 .skill-bar {
@@ -373,7 +562,7 @@ body {
   width: calc(100% + 100px);
   height: calc(100% + 100px);
   background-size: 50px 50px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(10, 20, 50, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(10, 20, 50, 0.04) 1px, transparent 1px);
   animation: grid-move 25s linear infinite;
@@ -383,13 +572,20 @@ body {
 }
 
 @keyframes grid-move {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-50px, -50px); }
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(-50px, -50px);
+  }
 }
 
 /* ✅ PERF FIX: disable grid animation on mobile to save battery */
 @media (max-width: 768px) {
-  .grid-bg { animation: none; }
+  .grid-bg {
+    animation: none;
+  }
 }
 
 /* 2. Floating Glow Orbs */
@@ -411,18 +607,53 @@ body {
   will-change: transform;
 }
 
-.orb-1 { width: 350px; height: 350px; background: #04091a; top: -10%; left: -10%; --duration: 18s; opacity: 0.3; }
-.orb-2 { width: 400px; height: 400px; background: #02050f; bottom: -20%; right: -10%; --duration: 22s; opacity: 0.2; }
-.orb-3 { width: 280px; height: 280px; background: #010208; top: 40%; left: 40%; --duration: 25s; filter: blur(60px); opacity: 0.25; }
+.orb-1 {
+  width: 350px;
+  height: 350px;
+  background: #04091a;
+  top: -10%;
+  left: -10%;
+  --duration: 18s;
+  opacity: 0.3;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: #02050f;
+  bottom: -20%;
+  right: -10%;
+  --duration: 22s;
+  opacity: 0.2;
+}
+
+.orb-3 {
+  width: 280px;
+  height: 280px;
+  background: #010208;
+  top: 40%;
+  left: 40%;
+  --duration: 25s;
+  filter: blur(60px);
+  opacity: 0.25;
+}
 
 @keyframes orb-float {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(-30px, 30px) scale(0.95); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-30px, 30px) scale(0.95);
+  }
 }
 
 /* ✅ PERF FIX: disable orb animation on mobile */
 @media (max-width: 768px) {
-  .orb { animation: none; filter: blur(40px); }
+  .orb {
+    animation: none;
+    filter: blur(40px);
+  }
 }
 
 /* 3. Static SVG Grain/Noise */
@@ -434,6 +665,7 @@ body {
   opacity: 0.02;
   background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
+
 /* =====================================================
    MOBILE PERFORMANCE OPTIMISATIONS
    Applied only on coarse-pointer (touch) devices.
@@ -469,24 +701,99 @@ body {
     -webkit-backdrop-filter: blur(4px) !important;
   }
 
-  /* 3. SVG filter (glow) in ScrollProgress is expensive on mobile — remove it */
+  /* 4. SVG filter (glow) in ScrollProgress is expensive on mobile — remove it */
   circle[filter] {
     filter: none !important;
   }
 
-  /* 4. Disable the 3D Spline viewer on mobile — WebGL on mobile = lag & battery drain */
-  spline-viewer {
-    display: none !important;
-  }
-
-  /* 5. Switch spinning placeholder (shown when spline hidden) to a static circle */
-  .animate-spin {
-    animation: none !important;
-    border-color: rgba(6,182,212,0.3) !important;
-  }
-
-  /* 6. Reduce will-change overuse — forces GPU layers which take memory */
+  /* 5. Reduce will-change overuse — forces GPU layers which take memory */
   .orb {
     will-change: auto !important;
+  }
+}
+
+/* =====================================================
+   ADDITIONAL MOBILE PERFORMANCE — Phase 2
+   ===================================================== */
+
+/* Note: TextTickerDivider now uses requestAnimationFrame (JS) for its scroll
+   animation — more reliable than CSS animations on iOS Safari / Android.
+   The @keyframes marquee and .animate-marquee class are kept for any other
+   potential usage, but the ticker component no longer relies on them. */
+
+/* Sections: contain layout so browser skips off-screen layout work.
+   NOTE: avoid 'paint' containment — it clips Spline WebGL canvas on mobile Chrome/Safari */
+section {
+  contain: layout;
+}
+
+/* ✅ PERF: On very small screens (phones) skip backdrop-blur on navbar entirely
+   The pill navbar background already provides enough contrast */
+@media (max-width: 480px) {
+  .backdrop-blur-md,
+  .backdrop-blur-sm,
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* ✅ PERF: Respect user's OS preference for reduced motion.
+   Kills CSS animations but NOT transitions — transitions drive the title
+   fade-in/out and other UX feedback that should still work. */
+@media (prefers-reduced-motion: reduce) {
+  /* Kill infinite decorative animations */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee {
+    animation: none !important;
+  }
+
+  .grid-bg {
+    animation: none !important;
+  }
+
+  /* On reduced-motion, show gradient statically (no shift animation) */
+  .title-gradient--animating {
+    animation: none !important;
+  }
+
+  /* ✅ TICKER EXCEPTION: override the * kill above.
+     .ticker-track has higher specificity than * so !important here wins.
+     The ticker shows content (role titles) — not purely decorative —
+     so we keep it running even in reduced-motion mode, just slightly slower. */
+  .ticker-track {
+    -webkit-animation-duration: 35s !important;
+    animation-duration: 35s !important;
+    -webkit-animation-iteration-count: infinite !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* ✅ PERF: Limit expensive filter (blur) on low-end mobile.
+   Targets elements that still carry blur on mobile screens. */
+@media (pointer: coarse) and (max-width: 768px) {
+  /* The glass card frame in HomeSection has backdrop-blur-2xl — reduce it */
+  .backdrop-blur-2xl {
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+  }
+
+  /* Neon glow on heading text: expensive text-shadow on mobile — simplify */
+  .animate-neon-glow {
+    text-shadow:
+      0 0 5px #06b6d4,
+      0 0 12px rgba(6, 182, 212, 0.5) !important;
+  }
+
+  /* translateZ trick on About card children causes extra compositing layers */
+  [style*="translateZ"] {
+    transform: none !important;
   }
 }

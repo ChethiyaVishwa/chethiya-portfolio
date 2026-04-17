@@ -204,59 +204,77 @@ Sent from your portfolio contact form`;
                   transformStyle: 'preserve-3d'
                 }}
               >
-              {/* Contact Icon */}
-              <div className="text-center mb-6">
-                <div className={`w-14 h-14 min-[480px]:w-16 min-[480px]:h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-r from-${contact.color} to-${contact.color}/80 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 p-2 min-[480px]:p-3 flex-shrink-0`}>
-                  <img
-                    src={contact.icon}
-                    alt={contact.name}
-                    className="w-8 h-8 min-[480px]:w-10 min-[480px]:h-10 sm:w-12 sm:h-12 object-contain flex-shrink-0"
-                  />
+                {/* Contact Icon */}
+                <div className="text-center mb-6">
+                  <div className={`w-14 h-14 min-[480px]:w-16 min-[480px]:h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-r from-${contact.color} to-${contact.color}/80 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 p-2 min-[480px]:p-3 flex-shrink-0`}>
+                    <img
+                      src={contact.icon}
+                      alt={contact.name}
+                      className="w-8 h-8 min-[480px]:w-10 min-[480px]:h-10 sm:w-12 sm:h-12 object-contain flex-shrink-0"
+                    />
+                  </div>
+                  <h3 className={`text-xl sm:text-2xl font-bold text-${contact.color} mb-2`}>
+                    {contact.name}
+                  </h3>
                 </div>
-                <h3 className={`text-xl sm:text-2xl font-bold text-${contact.color} mb-2`}>
-                  {contact.name}
-                </h3>
-              </div>
 
-              {/* Contact Information */}
-              <div className="text-center">
-                <p className="text-white font-semibold text-sm sm:text-base mb-3 break-all">
-                  {contact.value}
-                </p>
-                <p className="text-white text-xs sm:text-sm leading-relaxed">
-                  {contact.description}
-                </p>
-              </div>
+                {/* Contact Information */}
+                <div className="text-center">
+                  <p className="text-white font-semibold text-sm sm:text-base mb-3 break-all">
+                    {contact.value}
+                  </p>
+                  <p className="text-white text-xs sm:text-sm leading-relaxed">
+                    {contact.description}
+                  </p>
+                </div>
 
-              {/* Hover Effect */}
-              <div className={`absolute inset-0 bg-gradient-to-r from-${contact.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
+                {/* Hover Effect */}
+                <div className={`absolute inset-0 bg-gradient-to-r from-${contact.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
 
-              {/* Click Indicator */}
-              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className={`w-2 h-2 rounded-full bg-${contact.color} animate-pulse`}></div>
+                {/* Click Indicator */}
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className={`w-2 h-2 rounded-full bg-${contact.color} animate-pulse`}></div>
+                </div>
               </div>
-            </div>
             );
           })}
         </div>
 
         {/* Contact Form & 3D Element */}
         <div className="max-w-6xl mx-auto mb-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          
-          {/* ✅ PERF FIX: 3D Spline Robot — lazy-loaded via IntersectionObserver */}
+
+          {/* 3D Spline Robot — lazy-loaded via IntersectionObserver, works on all devices */}
           <div
             ref={splineRef}
-            className="w-full h-[350px] sm:h-[400px] lg:h-[600px] relative flex items-center justify-center animate-text-reveal delay-1000 order-2 lg:order-1"
+            className="w-full h-[320px] sm:h-[400px] lg:h-[600px] relative flex items-center justify-center animate-text-reveal delay-1000 order-2 lg:order-1"
           >
             {splineLoaded ? (
               <spline-viewer
                 url="https://prod.spline.design/WO32wpo0LORDO3uZ/scene.splinecode"
-                className="w-full h-full"
+                style={{ width: '100%', height: '100%', display: 'block' }}
               ></spline-viewer>
             ) : (
-              /* Placeholder shown while out of view */
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="w-24 h-24 rounded-full border-2 border-cyan/30 border-t-cyan animate-spin" />
+              /* Loading skeleton — shown while Spline WebGL scene is fetching */
+              <div className="w-full h-full flex flex-col items-center justify-center gap-6">
+                {/* Robot silhouette placeholder */}
+                <div className="relative">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-cyan/20 to-red/10 border border-cyan/20 flex items-center justify-center">
+                    <svg className="w-12 h-12 sm:w-16 sm:h-16 text-cyan/40" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7H3a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M5 14v8h14v-8H5m2 2h2v2H7v-2m4 0h2v2h-2v-2m4 0h2v2h-2v-2z"/>
+                    </svg>
+                  </div>
+                  {/* Pulse ring */}
+                  <div className="absolute inset-0 rounded-full border border-cyan/20 animate-ping opacity-30"></div>
+                </div>
+                {/* Loading dots */}
+                <div className="flex gap-2 items-center">
+                  <span className="text-cyan/50 text-xs sm:text-sm font-mono tracking-widest uppercase">Loading Robot</span>
+                  <span className="flex gap-1">
+                    <span className="w-1 h-1 rounded-full bg-cyan/50 animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                    <span className="w-1 h-1 rounded-full bg-cyan/50 animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                    <span className="w-1 h-1 rounded-full bg-cyan/50 animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                  </span>
+                </div>
               </div>
             )}
           </div>

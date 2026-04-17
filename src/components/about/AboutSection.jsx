@@ -2,6 +2,11 @@ import React from 'react';
 import gsap from 'gsap';
 import { useTilt } from '../../hooks/useTilt';
 
+// ✅ PERF: detect touch/coarse pointer once
+const isCoarsePointer =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(pointer: coarse)').matches;
+
 const AboutSection = () => {
   const { handleMouseEnter, handleMouseMove, handleMouseLeave } = useTilt({
     rotationIntensity: 2,
@@ -37,11 +42,11 @@ const AboutSection = () => {
       <div className="absolute inset-0 bg-gradient-to-l from-red/5 via-transparent to-cyan/5"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-transparent via-gray-700/10 to-transparent"></div>
 
-      {/* Decorative Elements */}
-      <div className="absolute top-32 right-20 w-80 h-80 bg-red/8 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-32 left-20 w-64 h-64 bg-cyan/8 rounded-full blur-3xl"></div>
-      <div className="absolute top-1/3 right-1/3 w-48 h-48 bg-gradient-to-r from-red/5 to-cyan/5 rounded-full blur-2xl"></div>
-      <div className="absolute bottom-1/3 left-1/3 w-56 h-56 bg-gradient-to-l from-cyan/5 to-red/5 rounded-full blur-2xl"></div>
+      {/* Decorative Elements — hidden on mobile to save composite layers */}
+      <div className="hidden sm:block absolute top-32 right-20 w-80 h-80 bg-red/8 rounded-full blur-3xl" />
+      <div className="hidden sm:block absolute bottom-32 left-20 w-64 h-64 bg-cyan/8 rounded-full blur-3xl" />
+      <div className="hidden sm:block absolute top-1/3 right-1/3 w-48 h-48 bg-gradient-to-r from-red/5 to-cyan/5 rounded-full blur-2xl" />
+      <div className="hidden sm:block absolute bottom-1/3 left-1/3 w-56 h-56 bg-gradient-to-l from-cyan/5 to-red/5 rounded-full blur-2xl" />
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 xl:gap-20 w-full">
           {/* Text Content */}
@@ -72,7 +77,7 @@ const AboutSection = () => {
                     service.color === 'red'
                       ? 'border-red/20'
                       : 'border-cyan/20';
-                  
+
                   const hoverClasses =
                     service.color === 'red'
                       ? 'hover:border-red/30 hover:shadow-red/20'
@@ -85,29 +90,30 @@ const AboutSection = () => {
                       onMouseMove={(e) => handleMouseMove(e, index)}
                       onMouseLeave={(e) => handleMouseLeave(e, index)}
                       className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-4 sm:p-6 rounded-xl border ${borderClasses} transition-shadow duration-300 hover:shadow-lg relative overflow-hidden group cursor-pointer ${hoverClasses}`}
-                      style={{ transformStyle: 'preserve-3d' }}
+                      // ✅ PERF: preserve-3d is pointless on touch
+                      style={{ transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d' }}
                     >
-                    <div className={`absolute inset-0 bg-gradient-to-r from-${service.color}/5 to-transparent pointer-events-none`}></div>
-                    <div className="relative z-10 pointer-events-none">
-                      <h4
-                        className={`text-${service.color} text-sm sm:text-base font-semibold mb-2`}
-                        style={{ transform: 'translateZ(20px)' }}
-                      >
-                        {service.title}
-                      </h4>
-                      <p
-                        className="text-gray-300 text-xs sm:text-sm"
-                        style={{ transform: 'translateZ(15px)' }}
-                      >
-                        {service.description}
-                      </p>
+                      <div className={`absolute inset-0 bg-gradient-to-r from-${service.color}/5 to-transparent pointer-events-none`}></div>
+                      <div className="relative z-10 pointer-events-none">
+                        <h4
+                          className={`text-${service.color} text-sm sm:text-base font-semibold mb-2`}
+                          style={{ transform: 'translateZ(20px)' }}
+                        >
+                          {service.title}
+                        </h4>
+                        <p
+                          className="text-gray-300 text-xs sm:text-sm"
+                          style={{ transform: 'translateZ(15px)' }}
+                        >
+                          {service.description}
+                        </p>
+                      </div>
+                      {/* Glass sheen effect */}
+                      <div
+                        className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-xl"
+                        style={{ transform: 'translateZ(10px)' }}
+                      ></div>
                     </div>
-                    {/* Glass sheen effect */}
-                    <div
-                      className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-xl"
-                      style={{ transform: 'translateZ(10px)' }}
-                    ></div>
-                  </div>
                   );
                 })}
               </div>
@@ -131,8 +137,8 @@ const AboutSection = () => {
               <div className="pointer-events-none absolute -top-10 -right-8 w-40 h-40 bg-red/30 rounded-full blur-3xl opacity-40"></div>
               <div className="pointer-events-none absolute -bottom-10 -left-10 w-44 h-44 bg-cyan/30 rounded-full blur-3xl opacity-40"></div>
 
-              {/* Main Card */}
-              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900/95 via-gray-900/80 to-gray-800/90 shadow-[0_24px_80px_rgba(0,0,0,0.85)] backdrop-blur-2xl">
+              {/* Main Card — backdrop-blur-2xl is very expensive on mobile GPUs, use sm:backdrop-blur-2xl */}
+              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900/95 via-gray-900/80 to-gray-800/90 shadow-[0_24px_80px_rgba(0,0,0,0.85)] backdrop-blur-sm sm:backdrop-blur-2xl">
                 {/* Accent strip */}
                 <div className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-cyan via-red to-cyan opacity-90"></div>
 

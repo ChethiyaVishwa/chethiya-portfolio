@@ -2,6 +2,54 @@ import React from 'react';
 import gsap from 'gsap';
 import { useTilt } from '../../hooks/useTilt';
 
+// ✅ PERF: detect touch/coarse pointer once — used to skip heavy video decode on mobile
+const isCoarsePointer =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(pointer: coarse)').matches;
+
+// ✅ PERF: map project id → real screenshot image path (shown on mobile instead of video)
+const PROJECT_IMAGES = {
+  9: 'images/online_ERP.png',
+  8: 'images/converter.png',
+  1: 'images/adventure.png',
+  2: 'images/sirasa.png',
+  3: 'images/nimzy2.png',
+  4: 'images/intern.png',
+  5: 'images/productinfo.png',
+  6: 'images/film.jpg',
+  // id 7 (Chat App) has no screenshot — will fall back to gradient poster
+};
+
+// Gradient fallback for projects that have no screenshot
+const PROJECT_GRADIENTS = {
+  7: 'from-indigo-500/20 to-blue-500/20',
+};
+
+// ✅ PERF: mobile poster — real screenshot image, or gradient if not available
+const StaticProjectPoster = ({ project }) => {
+  const imgSrc = PROJECT_IMAGES[project.id];
+  if (imgSrc) {
+    return (
+      <img
+        src={`${import.meta.env.BASE_URL}${imgSrc}`}
+        alt={project.name}
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    );
+  }
+  // Fallback gradient for projects without a screenshot
+  return (
+    <div className={`absolute inset-0 bg-gradient-to-br ${PROJECT_GRADIENTS[project.id] ?? 'from-gray-700 to-gray-800'} flex items-center justify-center`}>
+      <div className="text-center">
+        <div className="text-4xl sm:text-5xl mb-2">🚀</div>
+        <p className="text-white/70 text-sm">{project.name}</p>
+      </div>
+    </div>
+  );
+};
+
 const ExperienceSection = () => {
   const { handleMouseEnter, handleMouseMove, handleMouseLeave } = useTilt({
     rotationIntensity: 2,
@@ -162,10 +210,10 @@ const ExperienceSection = () => {
       <div className="absolute inset-0 bg-gradient-to-l from-red/5 via-transparent to-cyan/5"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-transparent via-gray-700/10 to-transparent"></div>
 
-      {/* Decorative Elements */}
-      <div className="absolute top-20 right-20 w-80 h-80 bg-red/8 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
-      <div className="absolute bottom-20 left-20 w-72 h-72 bg-cyan/8 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
-      <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-r from-cyan/5 to-red/5 rounded-full blur-2xl"></div>
+      {/* Decorative Elements — reduced on mobile to save composite layers */}
+      <div className="absolute top-20 right-20 w-80 h-80 bg-red/8 rounded-full blur-3xl hidden sm:block" />
+      <div className="absolute bottom-20 left-20 w-72 h-72 bg-cyan/8 rounded-full blur-3xl hidden sm:block" />
+      <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-r from-cyan/5 to-red/5 rounded-full blur-2xl hidden sm:block" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         {/* Section Header */}
@@ -198,7 +246,8 @@ const ExperienceSection = () => {
                 className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 hover:border-${exp.color}/30 transition-all duration-500 hover:shadow-lg hover:shadow-${exp.color}/10 group relative overflow-hidden animate-text-reveal`}
                 style={{
                   animationDelay: `${(index + 1) * 200}ms`,
-                  transformStyle: 'preserve-3d'
+                  // ✅ PERF: preserve-3d is pointless (and costly) on touch — skip it
+                  transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d'
                 }}
               >
                 {/* Experience Header */}
@@ -283,172 +332,121 @@ const ExperienceSection = () => {
                   className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 rounded-2xl border border-gray-700/50 transition-all duration-500 hover:shadow-lg group relative overflow-hidden animate-text-reveal ${hoverClasses}`}
                   style={{
                     animationDelay: `${1200 + (index * 200)}ms`,
-                    transformStyle: 'preserve-3d'
+                    // ✅ PERF: preserve-3d is pointless (and costly) on touch — skip it
+                    transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d'
                   }}
                 >
-                {/* Project Image/Video */}
-                <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl">
-                  {project.id === 9 ? (
-                    // Video preview for ERP System project
-                    <video
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={`${import.meta.env.BASE_URL}images/Online_ERP.mp4`} type="video/mp4" />
-                    </video>
-                  ) : project.id === 8 ? (
-                    // Video preview for Media Converter Web App project
-                    <video
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={`${import.meta.env.BASE_URL}images/converter.mp4`} type="video/mp4" />
-                    </video>
-                  ) : project.id === 1 ? (
-                    // Video preview for Adventure Travel project
-                    <video
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={`${import.meta.env.BASE_URL}images/adventure.mp4`} type="video/mp4" />
-                    </video>
-                  ) : project.id === 2 ? (
-                    // Video preview for Sirasa Oil Centre project
-                    <video
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={`${import.meta.env.BASE_URL}images/sirasa.mp4`} type="video/mp4" />
-                    </video>
-                  ) : project.id === 3 ? (
-                    // Video preview for NIMZY project
-                    <video
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={`${import.meta.env.BASE_URL}images/nimzy2.mp4`} type="video/mp4" />
-                    </video>
-                  ) : project.id === 4 ? (
-                    // Video preview for SLT Mobitel Intern Management project
-                    <video
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={`${import.meta.env.BASE_URL}images/intern.mp4`} type="video/mp4" />
-                    </video>
-                  ) : project.id === 5 ? (
-                    // Video preview for SLT Mobitel Product Info Hub project
-                    <video
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={`${import.meta.env.BASE_URL}images/productinfo.mp4`} type="video/mp4" />
-                    </video>
-                  ) : project.id === 6 ? (
-                    // Video preview for Movie Ticket Booking System project
-                    <video
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={`${import.meta.env.BASE_URL}images/film.mp4`} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-4xl sm:text-5xl mb-2">🚀</div>
-                        <p className="text-white text-sm">Project Preview</p>
+                  {/* Project Image/Video */}
+                  <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl">
+                    {/* ✅ PERF: on coarse/touch devices skip all autoPlay videos entirely.
+                         8x simultaneous video decodes kills mobile CPU & battery. */}
+                    {isCoarsePointer ? (
+                      <StaticProjectPoster project={project} />
+                    ) : project.id === 9 ? (
+                      <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                        <source src={`${import.meta.env.BASE_URL}images/Online_ERP.mp4`} type="video/mp4" />
+                      </video>
+                    ) : project.id === 8 ? (
+                      <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                        <source src={`${import.meta.env.BASE_URL}images/converter.mp4`} type="video/mp4" />
+                      </video>
+                    ) : project.id === 1 ? (
+                      <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                        <source src={`${import.meta.env.BASE_URL}images/adventure.mp4`} type="video/mp4" />
+                      </video>
+                    ) : project.id === 2 ? (
+                      <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                        <source src={`${import.meta.env.BASE_URL}images/sirasa.mp4`} type="video/mp4" />
+                      </video>
+                    ) : project.id === 3 ? (
+                      <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                        <source src={`${import.meta.env.BASE_URL}images/nimzy2.mp4`} type="video/mp4" />
+                      </video>
+                    ) : project.id === 4 ? (
+                      <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                        <source src={`${import.meta.env.BASE_URL}images/intern.mp4`} type="video/mp4" />
+                      </video>
+                    ) : project.id === 5 ? (
+                      <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                        <source src={`${import.meta.env.BASE_URL}images/productinfo.mp4`} type="video/mp4" />
+                      </video>
+                    ) : project.id === 6 ? (
+                      <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                        <source src={`${import.meta.env.BASE_URL}images/film.mp4`} type="video/mp4" />
+                      </video>
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="text-4xl sm:text-5xl mb-2">🚀</div>
+                          <p className="text-white text-sm">Project Preview</p>
+                        </div>
+                      </div>
+                    )}
+                    <div className={`absolute inset-0 bg-gradient-to-r from-${project.color}/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+                  </div>
+
+                  {/* Project Content */}
+                  <div className="p-6 sm:p-8">
+                    <h4 className={`text-xl sm:text-2xl font-bold text-${project.color} mb-3 group-hover:scale-105 transition-transform duration-300`}>
+                      {project.name}
+                    </h4>
+
+                    <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
+                      {project.description}
+                    </p>
+
+                    {/* Technologies */}
+                    <div className="mb-4">
+                      <h5 className="text-white font-semibold text-sm mb-2">Technologies:</h5>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.map((tech, techIndex) => (
+                          <span
+                            key={techIndex}
+                            className={`px-2 py-1 bg-gradient-to-r from-${project.color}/20 to-${project.color}/10 text-${project.color} text-xs rounded-full border border-${project.color}/30`}
+                          >
+                            {tech}
+                          </span>
+                        ))}
                       </div>
                     </div>
-                  )}
-                  <div className={`absolute inset-0 bg-gradient-to-r from-${project.color}/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-                </div>
 
-                {/* Project Content */}
-                <div className="p-6 sm:p-8">
-                  <h4 className={`text-xl sm:text-2xl font-bold text-${project.color} mb-3 group-hover:scale-105 transition-transform duration-300`}>
-                    {project.name}
-                  </h4>
+                    {/* Features */}
+                    <div className="mb-6">
+                      <h5 className="text-white font-semibold text-sm mb-2">Key Features:</h5>
+                      <ul className="grid grid-cols-2 gap-1">
+                        {project.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center space-x-2 text-white text-xs">
+                            <div className={`w-1 h-1 rounded-full bg-${project.color} flex-shrink-0`}></div>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
-                    {project.description}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="mb-4">
-                    <h5 className="text-white font-semibold text-sm mb-2">Technologies:</h5>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className={`px-2 py-1 bg-gradient-to-r from-${project.color}/20 to-${project.color}/10 text-${project.color} text-xs rounded-full border border-${project.color}/30`}
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                    {/* Project Links */}
+                    <div className="flex gap-3">
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex-1 px-4 py-2 bg-gradient-to-r from-${project.color} to-${project.color}/80 text-white text-sm font-semibold rounded-lg hover:scale-105 transition-all duration-300 text-center`}
+                      >
+                        View Code
+                      </a>
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex-1 px-4 py-2 border-2 border-${project.color} text-${project.color} text-sm font-semibold rounded-lg hover:bg-${project.color} hover:text-white transition-all duration-300 text-center`}
+                      >
+                        Live Demo
+                      </a>
                     </div>
                   </div>
 
-                  {/* Features */}
-                  <div className="mb-6">
-                    <h5 className="text-white font-semibold text-sm mb-2">Key Features:</h5>
-                    <ul className="grid grid-cols-2 gap-1">
-                      {project.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center space-x-2 text-white text-xs">
-                          <div className={`w-1 h-1 rounded-full bg-${project.color} flex-shrink-0`}></div>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Project Links */}
-                  <div className="flex gap-3">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex-1 px-4 py-2 bg-gradient-to-r from-${project.color} to-${project.color}/80 text-white text-sm font-semibold rounded-lg hover:scale-105 transition-all duration-300 text-center`}
-                    >
-                      View Code
-                    </a>
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex-1 px-4 py-2 border-2 border-${project.color} text-${project.color} text-sm font-semibold rounded-lg hover:bg-${project.color} hover:text-white transition-all duration-300 text-center`}
-                    >
-                      Live Demo
-                    </a>
-                  </div>
+                  {/* Hover Effect Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-r from-${project.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none`}></div>
                 </div>
-
-                {/* Hover Effect Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-r from-${project.color}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none`}></div>
-              </div>
               );
             })}
           </div>

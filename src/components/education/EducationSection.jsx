@@ -111,42 +111,48 @@ const EducationSection = () => {
       issuer: "Google (Coursera)",
       year: "2026",
       icon: <FaDiagramProject className="text-red mx-auto drop-shadow-[0_0_10px_rgba(239,68,68,0.7)]" />,
-      description: "Fundamental concepts of project management, project life cycles, and project management methodologies"
+      description: "Fundamental concepts of project management, project life cycles, and project management methodologies",
+      color: "red"
     },
     {
       name: "Professional Certificate in Artificial Intelligence",
       issuer: "Informatics Institute of Technology (IIT)",
       year: "2025 - 2026",
       icon: <FaMicrochip className="text-cyan mx-auto drop-shadow-[0_0_10px_rgba(6,182,212,0.7)]" />,
-      description: "Advanced studies in artificial intelligence, machine learning, and data science. Gaining expertise in modern AI technologies and applications."
+      description: "Advanced studies in artificial intelligence, machine learning, and data science. Gaining expertise in modern AI technologies and applications.",
+      color: "cyan"
     },
     {
       name: "Microsoft Learn Student Ambassador",
       issuer: "Microsoft Corporation",
       year: "2024",
       icon: <FaTrophy className="text-red mx-auto drop-shadow-[0_0_10px_rgba(239,68,68,0.7)]" />,
-      description: "Full Stack Web Development with Next.js 14: From Concept to Azure Deployment"
+      description: "Full Stack Web Development with Next.js 14: From Concept to Azure Deployment",
+      color: "red"
     },
     {
       name: "Higher National Diploma in Software Engineering",
       issuer: "National Institute of Business Management",
       year: "2024 - 2025",
       icon: <FaUserGraduate className="text-cyan mx-auto drop-shadow-[0_0_10px_rgba(6,182,212,0.7)]" />,
-      description: "Comprehensive software engineering program covering modern development practices and system design"
+      description: "Comprehensive software engineering program covering modern development practices and system design",
+      color: "cyan"
     },
     {
       name: "Diploma in Software Engineering",
       issuer: "National Institute of Business Management",
       year: "2022 - 2023",
       icon: <FaCertificate className="text-red mx-auto drop-shadow-[0_0_10px_rgba(239,68,68,0.7)]" />,
-      description: "Foundation program in software engineering covering programming fundamentals and web development"
+      description: "Foundation program in software engineering covering programming fundamentals and web development",
+      color: "red"
     },
     {
       name: "Professional Reference",
       issuer: "Mr. Manjula Kulathunga, CEO, Wysheit Technologies",
       year: "2024",
       icon: <FaHandshake className="text-cyan mx-auto drop-shadow-[0_0_10px_rgba(6,182,212,0.7)]" />,
-      contact: "pmkkulathunga@gmail.com | +94 776200029"
+      contact: "pmkkulathunga@gmail.com | +94 776200029",
+      color: "cyan"
     }
   ];
 
@@ -209,9 +215,17 @@ const EducationSection = () => {
                     onMouseEnter={(e) => handleMouseEnter(e, `edu-${education.id}`)}
                     onMouseMove={(e) => handleMouseMove(e, `edu-${education.id}`)}
                     onMouseLeave={(e) => handleMouseLeave(e, `edu-${education.id}`)}
-                    className={`flex-1 bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 transition-all duration-500 hover:shadow-lg group relative overflow-hidden ${hoverClasses}`}
-                    style={{ transformStyle: 'preserve-3d' }}
+                    className={`flex-1 p-6 sm:p-8 rounded-2xl border border-white/[0.05] transition-all duration-500 hover:shadow-lg group relative overflow-hidden ${hoverClasses}`}
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.015) 0%, rgba(14,22,45,0.07) 50%, rgba(255,255,255,0.01) 100%)',
+                      backdropFilter: 'blur(8px)',
+                      WebkitBackdropFilter: 'blur(8px)',
+                    }}
                   >
+                    {/* Inner glass top-edge highlight */}
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/[0.05] to-transparent rounded-t-2xl" />
                     {/* Card Header */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4" style={{ transform: 'translateZ(20px)' }}>
                       <div>
@@ -265,23 +279,34 @@ const EducationSection = () => {
             Certifications & Achievements
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {certifications.map((cert, index) => (
+              {certifications.map((cert, index) => {
+                const hoverClasses =
+                  cert.color === 'red'
+                    ? 'hover:border-red/30 hover:shadow-red/20'
+                    : 'hover:border-cyan/30 hover:shadow-cyan/10';
+
+                return (
               <div
                 key={cert.name}
                 onMouseEnter={(e) => handleMouseEnter(e, `cert-${index}`)}
                 onMouseMove={(e) => handleMouseMove(e, `cert-${index}`)}
                 onMouseLeave={(e) => handleMouseLeave(e, `cert-${index}`)}
-                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-4 sm:p-6 rounded-xl border border-gray-700/50 hover:border-cyan/40 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan/20 cursor-pointer"
+                className={`p-4 sm:p-6 rounded-xl border border-white/[0.05] transition-all duration-300 hover:shadow-lg cursor-pointer relative overflow-hidden ${hoverClasses}`}
                 style={{
                   animationDelay: `${1200 + (index * 100)}ms`,
-                  transformStyle: 'preserve-3d'
+                  transformStyle: 'preserve-3d',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.015) 0%, rgba(14,22,45,0.07) 60%, rgba(255,255,255,0.01) 100%)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
                 }}
               >
+                {/* Top edge shine */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-xl" />
                 <div className="text-center">
                   <div className="text-3xl sm:text-4xl mb-3" style={{ transform: 'translateZ(20px)' }}>
                     {cert.icon}
                   </div>
-                  <h4 className="text-white font-semibold text-sm sm:text-base mb-2 group-hover:text-cyan transition-colors" style={{ transform: 'translateZ(30px)' }}>
+                  <h4 className={`text-white font-semibold text-sm sm:text-base mb-2 group-hover:text-${cert.color} transition-colors`} style={{ transform: 'translateZ(30px)' }}>
                     {cert.name}
                   </h4>
                   <p className="text-white text-xs sm:text-sm mb-1" style={{ transform: 'translateZ(20px)' }}>
@@ -293,11 +318,11 @@ const EducationSection = () => {
                     </p>
                   )}
                   {cert.contact && (
-                    <p className="text-cyan text-xs mb-2" style={{ transform: 'translateZ(20px)' }}>
+                    <p className={`text-${cert.color} text-xs mb-2`} style={{ transform: 'translateZ(20px)' }}>
                       {cert.contact}
                     </p>
                   )}
-                  <p className="text-cyan text-xs font-medium" style={{ transform: 'translateZ(20px)' }}>
+                  <p className={`text-${cert.color} text-xs font-medium`} style={{ transform: 'translateZ(20px)' }}>
                     {cert.year}
                   </p>
                 </div>
@@ -307,7 +332,8 @@ const EducationSection = () => {
                   style={{ transform: 'translateZ(1px)' }}
                 ></div>
               </div>
-            ))}
+                );
+              })}
           </div>
         </div>
       </div>

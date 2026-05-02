@@ -80,11 +80,10 @@ const HomeSection = () => {
               </h1>
               <div className="mt-0 sm:mt-3 md:mt-4">
                 <span
-                  className={`title-gradient inline-block relative text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ${
-                    isTyping
+                  className={`title-gradient inline-block relative text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ${isTyping
                       ? 'opacity-0 scale-95 translate-y-2'
                       : `opacity-100 scale-100 translate-y-0 title-gradient--animating`
-                  } transition-all duration-500 ease-out`}
+                    } transition-all duration-500 ease-out`}
                 >
                   {titles[currentTitleIndex]}
                 </span>
@@ -158,45 +157,161 @@ const HomeSection = () => {
             </div>
           </div>
 
-          {/* Image */}
-          <div className="relative mt-6 lg:mt-0 flex items-center justify-center lg:justify-end translate-y-2 sm:translate-y-1 md:translate-y-0 lg:translate-y-1 xl:translate-y-2">
-            <div className="relative z-10 md:-translate-x-2 lg:-translate-x-3 xl:-translate-x-4 transition-transform duration-500">
-              {/* Main Image Container with modern frame */}
-              <div className={`relative group ${isCoarsePointer ? '' : 'animate-float'} w-[220px] sm:w-[260px] md:w-[300px] lg:w-[320px] xl:w-[340px]`}>
-                {/* Outer neon gradient frame */}
-                <div className="pointer-events-none absolute -inset-1 sm:-inset-1.5 rounded-[2.2rem] bg-gradient-to-tr from-cyan via-red to-cyan opacity-70 group-hover:opacity-100 blur-md sm:blur-lg transition-all duration-500 group-hover:scale-[1.02]"></div>
+          {/* Image — Orbital Tech Showcase */}
+          <div className="relative mt-10 lg:mt-0 flex items-center justify-center lg:justify-end">
+            {/* Outer positioning wrapper — chips live here, outside the float wrapper */}
+            <div className="relative z-10 md:-translate-x-2 lg:-translate-x-3 xl:-translate-x-4" style={{ padding: '0 14%' }}>
 
-                {/* Glass card frame */}
-                <div className="relative rounded-[2rem] border border-white/10 bg-black/40 backdrop-blur-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.75)] group-hover:shadow-[0_25px_80px_rgba(0,0,0,0.9)] transition-all duration-500">
-                  {/* Subtle inner gradient wash */}
-                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.18),transparent_55%),radial-gradient(circle_at_bottom,_rgba(248,113,113,0.18),transparent_55%)] opacity-80 mix-blend-screen"></div>
 
+
+              {/* ══ ORBITAL TECH CHIPS — all devices (animated on desktop, static on mobile) ══ */}
+
+                {/* 1 — React  (top-left) */}
+                <div className="animate-chip-orbit absolute z-20 select-none"
+                  style={{ top: '18%', left: '0%', animationDuration: '4.0s', animationDelay: '0s', '--orbit-dur': '4.0s', '--orbit-delay': '0s' }}>
+                  <div className="flex items-center gap-1 lg:gap-2 px-1.5 py-1 lg:px-3 lg:py-2 rounded-lg lg:rounded-xl bg-[#0a1628] border border-[#61DAFB]/50 backdrop-blur-md shadow-[0_0_12px_rgba(97,218,251,0.30),0_2px_8px_rgba(0,0,0,0.5)] lg:shadow-[0_0_18px_rgba(97,218,251,0.35),0_4px_16px_rgba(0,0,0,0.6)]"
+                    style={{ color: '#61DAFB' }}>
+                    <svg viewBox="0 0 24 24" className="w-3 h-3 lg:w-4 lg:h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.3">
+                      <circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/>
+                      <ellipse cx="12" cy="12" rx="10" ry="3.8"/>
+                      <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(60 12 12)"/>
+                      <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(120 12 12)"/>
+                    </svg>
+                    <span className="text-[8px] lg:text-[11px] font-bold tracking-wide">React</span>
+                  </div>
+                </div>
+
+                {/* 2 — TypeScript  (top-right) */}
+                <div className="animate-chip-orbit absolute z-20 select-none"
+                  style={{ top: '14%', right: '0%', animationDuration: '3.6s', animationDelay: '0.6s', '--orbit-dur': '3.6s', '--orbit-delay': '0.6s' }}>
+                  <div className="flex items-center gap-1 lg:gap-2 px-1.5 py-1 lg:px-3 lg:py-2 rounded-lg lg:rounded-xl bg-[#0a1628] border border-[#60a5fa]/50 backdrop-blur-md shadow-[0_0_12px_rgba(96,165,250,0.30),0_2px_8px_rgba(0,0,0,0.5)] lg:shadow-[0_0_18px_rgba(96,165,250,0.35),0_4px_16px_rgba(0,0,0,0.6)]"
+                    style={{ color: '#60a5fa' }}>
+                    <svg viewBox="0 0 24 24" className="w-3 h-3 lg:w-4 lg:h-4 shrink-0" fill="currentColor">
+                      <path d="M3 3h18v18H3V3zm10.5 14.5v-1.8c.5.3 1.1.5 1.7.5.9 0 1.3-.4 1.3-.9 0-.6-.4-.9-1.4-1.2-1.4-.5-2.1-1.1-2.1-2.3 0-1.3 1-2.3 2.8-2.3.7 0 1.3.2 1.8.4v1.8c-.4-.3-1-.5-1.6-.5-.8 0-1.2.3-1.2.8 0 .5.4.8 1.4 1.1 1.5.5 2.1 1.2 2.1 2.4 0 1.4-1 2.3-2.9 2.3-.7 0-1.4-.1-1.9-.3zm-4.5.3H7.5V12H5v-1.5h7V12H9.5v5.8z"/>
+                    </svg>
+                    <span className="text-[8px] lg:text-[11px] font-bold tracking-wide">TypeScript</span>
+                  </div>
+                </div>
+
+                {/* 3 — Node.js  (middle-left) */}
+                <div className="animate-chip-orbit absolute z-20 select-none"
+                  style={{ top: '52%', left: '0%', animationDuration: '4.4s', animationDelay: '1.0s', '--orbit-dur': '4.4s', '--orbit-delay': '1.0s' }}>
+                  <div className="flex items-center gap-1 lg:gap-2 px-1.5 py-1 lg:px-3 lg:py-2 rounded-lg lg:rounded-xl bg-[#0a1628] border border-[#4ade80]/50 backdrop-blur-md shadow-[0_0_12px_rgba(74,222,128,0.25),0_2px_8px_rgba(0,0,0,0.5)] lg:shadow-[0_0_18px_rgba(74,222,128,0.30),0_4px_16px_rgba(0,0,0,0.6)]"
+                    style={{ color: '#4ade80' }}>
+                    <svg viewBox="0 0 24 24" className="w-3 h-3 lg:w-4 lg:h-4 shrink-0" fill="currentColor">
+                      <path d="M12 2L2 7l1.63.94L12 4.15l8.37 3.79L22 7 12 2zm0 3.27L5.08 8.5 12 11.73l6.92-3.23L12 5.27zM2 9l1.63.94L12 14.15V20l-8-4.85V9zm20 0v6.15L12 20v-5.85L20.37 9.94 22 9z"/>
+                    </svg>
+                    <span className="text-[8px] lg:text-[11px] font-bold tracking-wide">Node.js</span>
+                  </div>
+                </div>
+
+                {/* 4 — Python  (middle-right) */}
+                <div className="animate-chip-orbit absolute z-20 select-none"
+                  style={{ top: '56%', right: '0%', animationDuration: '3.8s', animationDelay: '1.5s', '--orbit-dur': '3.8s', '--orbit-delay': '1.5s' }}>
+                  <div className="flex items-center gap-1 lg:gap-2 px-1.5 py-1 lg:px-3 lg:py-2 rounded-lg lg:rounded-xl bg-[#0a1628] border border-[#facc15]/50 backdrop-blur-md shadow-[0_0_12px_rgba(250,204,21,0.22),0_2px_8px_rgba(0,0,0,0.5)] lg:shadow-[0_0_18px_rgba(250,204,21,0.28),0_4px_16px_rgba(0,0,0,0.6)]"
+                    style={{ color: '#facc15' }}>
+                    <svg viewBox="0 0 24 24" className="w-3 h-3 lg:w-4 lg:h-4 shrink-0" fill="currentColor">
+                      <path d="M11.9 2C7 2 7.3 4.1 7.3 4.1v2.1h4.8v.6H5.5C5.5 6.8 2 7.3 2 12s3.9 4.6 3.9 4.6H7.5v-2.2c0-1.3 1.1-2.4 2.4-2.4h4.8c1.2 0 2.1-1 2.1-2.1V4.2C16.8 2.2 14 2 11.9 2zm-1.3 1.4c.4 0 .7.3.7.7s-.3.7-.7.7-.7-.3-.7-.7.3-.7.7-.7zM12.1 22c4.9 0 4.6-2.1 4.6-2.1v-2.1h-4.8v-.6h6.6c0 0 3.5-.5 3.5-5.2s-3.9-4.6-3.9-4.6H16.5v2.2c0 1.3-1.1 2.4-2.4 2.4H9.3c-1.2 0-2.1 1-2.1 2.1v3.8c0 2 2.8 2.1 4.9 2.1zm1.3-1.4c-.4 0-.7-.3-.7-.7s.3-.7.7-.7.7.3.7.7-.3.7-.7.7z"/>
+                    </svg>
+                    <span className="text-[8px] lg:text-[11px] font-bold tracking-wide">Python</span>
+                  </div>
+                </div>
+
+                {/* 5 — SQL  (bottom-left) */}
+                <div className="animate-chip-orbit absolute z-20 select-none"
+                  style={{ bottom: '10%', left: '0%', animationDuration: '4.8s', animationDelay: '0.3s', '--orbit-dur': '4.8s', '--orbit-delay': '0.3s' }}>
+                  <div className="flex items-center gap-1 lg:gap-2 px-1.5 py-1 lg:px-3 lg:py-2 rounded-lg lg:rounded-xl bg-[#0a1628] border border-[#fb923c]/50 backdrop-blur-md shadow-[0_0_12px_rgba(251,146,60,0.22),0_2px_8px_rgba(0,0,0,0.5)] lg:shadow-[0_0_18px_rgba(251,146,60,0.28),0_4px_16px_rgba(0,0,0,0.6)]"
+                    style={{ color: '#fb923c' }}>
+                    <svg viewBox="0 0 24 24" className="w-3 h-3 lg:w-4 lg:h-4 shrink-0" fill="currentColor">
+                      <path d="M12 2C7 2 3 3.8 3 6v12c0 2.2 4 4 9 4s9-1.8 9-4V6c0-2.2-4-4-9-4zm0 2c4.4 0 7 1.6 7 2s-2.6 2-7 2-7-1.6-7-2 2.6-2 7-2zM5 9.2C6.6 10 9.2 10.5 12 10.5s5.4-.5 7-1.3V12c0 .4-2.6 2-7 2s-7-1.6-7-2V9.2zm0 5.3C6.6 15.3 9.2 16 12 16s5.4-.7 7-1.5V17c0 .4-2.6 2-7 2s-7-1.6-7-2v-2.5z"/>
+                    </svg>
+                    <span className="text-[8px] lg:text-[11px] font-bold tracking-wide">SQL</span>
+                  </div>
+                </div>
+
+                {/* 6 — Git  (bottom-right) */}
+                <div className="animate-chip-orbit absolute z-20 select-none"
+                  style={{ bottom: '6%', right: '0%', animationDuration: '3.4s', animationDelay: '1.8s', '--orbit-dur': '3.4s', '--orbit-delay': '1.8s' }}>
+                  <div className="flex items-center gap-1 lg:gap-2 px-1.5 py-1 lg:px-3 lg:py-2 rounded-lg lg:rounded-xl bg-[#0a1628] border border-[#f87171]/50 backdrop-blur-md shadow-[0_0_12px_rgba(248,113,113,0.22),0_2px_8px_rgba(0,0,0,0.5)] lg:shadow-[0_0_18px_rgba(248,113,113,0.28),0_4px_16px_rgba(0,0,0,0.6)]"
+                    style={{ color: '#f87171' }}>
+                    <svg viewBox="0 0 24 24" className="w-3 h-3 lg:w-4 lg:h-4 shrink-0" fill="currentColor">
+                      <path d="M23.5 11.5l-11-11a1.7 1.7 0 00-2.4 0l-2.4 2.4 3 3a2 2 0 012.6 2.6l2.9 2.9a2 2 0 012.6 2.6 2 2 0 01-2 2 2 2 0 01-2-2c0-.3.1-.7.2-1L14 11.7V18a2 2 0 011.2 1.9 2 2 0 01-2 2 2 2 0 01-2-2 2 2 0 011.3-1.9v-6.4a2 2 0 01-1.3-1.9 2 2 0 01.2-1L8.5 5.8 1 13.3a1.7 1.7 0 000 2.4l11 11a1.7 1.7 0 002.4 0l9.1-9.1a1.7 1.7 0 000-2.6z"/>
+                    </svg>
+                    <span className="text-[8px] lg:text-[11px] font-bold tracking-wide">Git</span>
+                  </div>
+                </div>
+
+
+              {/* ── Status badge + card — stacked via flex column ─────────── */}
+              <div
+                className={`relative flex flex-col items-center gap-3 group animate-float
+                  w-[220px] sm:w-[260px] md:w-[300px] lg:w-[320px] xl:w-[340px]`}
+              >
+                {/* Status badge — sits naturally above card, always centered */}
+                <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#060d1f]/90 border border-white/10 backdrop-blur-md select-none whitespace-nowrap">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="animate-status-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400 animate-dot-blink" />
+                  </span>
+                  <span className="text-[10px] sm:text-[11px] font-bold text-white/75 tracking-[0.16em] uppercase">Available for Work</span>
+                </div>
+
+                {/* Card */}
+                <div className="relative w-full">
+
+
+                {/* Card body */}
+                <div className="relative z-10 rounded-[1.5rem] overflow-hidden
+                  bg-[#06090f] border border-white/[0.07]
+                  group-hover:-translate-y-3 group-hover:scale-[1.015]
+                  transition-all duration-700 ease-out">
+
+                  {/* Top prism shine */}
+                  <div className="pointer-events-none absolute top-0 inset-x-0 h-px z-20 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                  <div className="pointer-events-none absolute top-0 left-0 right-0 h-16 z-10 bg-gradient-to-b from-white/[0.04] to-transparent" />
+
+
+
+                  {/* Shimmer sweep */}
+                  {!isCoarsePointer && (
+                    <div
+                      className="animate-shimmer-sweep pointer-events-none absolute inset-x-0 top-0 h-full z-20"
+                      style={{
+                        background: 'linear-gradient(180deg, transparent 15%, rgba(255,255,255,0.07) 50%, transparent 85%)',
+                        willChange: 'transform',
+                      }}
+                    />
+                  )}
+
+                  {/* Profile image */}
                   <img
                     src={`${import.meta.env.BASE_URL}images/me2.jpg`}
                     alt="Software Engineer"
-                    className="relative w-full h-auto rounded-[1.9rem] transform group-hover:scale-[1.03] group-hover:translate-y-0.5 transition-all duration-500"
+                    className="relative z-10 w-full h-auto block"
                   />
+
+                  {/* Bottom name overlay */}
+                  <div className="pointer-events-none absolute bottom-0 inset-x-0 z-20 px-4 pb-4 pt-14 bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                    <p className="text-white text-[10px] sm:text-[11px] font-bold tracking-[0.12em] sm:tracking-[0.15em] uppercase">Chethiya Vishwa</p>
+                    <p className="text-cyan/70 text-[7px] sm:text-[9px] tracking-[0.08em] sm:tracking-[0.15em] uppercase mt-0.5 truncate">BSc (Hons) IT for Business Undergraduate</p>
+                  </div>
                 </div>
 
-                {/* Offset cyber frame accent */}
-                <div className="pointer-events-none absolute -bottom-6 -right-7 sm:-bottom-8 sm:-right-10 w-24 h-24 sm:w-32 sm:h-32 border border-cyan/40 rounded-3xl rotate-12 group-hover:translate-x-2 group-hover:-translate-y-1 group-hover:rotate-[18deg] transition-transform duration-500"></div>
-                <div className="pointer-events-none absolute -top-6 -left-8 sm:-top-8 sm:-left-10 w-20 h-20 sm:w-28 sm:h-28 border border-red/35 rounded-3xl -rotate-6 group-hover:-translate-x-2 group-hover:translate-y-1 group-hover:-rotate-[12deg] transition-transform duration-500"></div>
-              </div>
+                {/* Dot grid — bottom right */}
+                {!isCoarsePointer && (
+                  <div className="pointer-events-none absolute -bottom-7 -right-7 z-0 grid grid-cols-5 gap-[5px] opacity-25 group-hover:opacity-50 transition-opacity duration-500">
+                    {Array.from({ length: 20 }).map((_, i) => (
+                      <div key={i} className="w-[3px] h-[3px] rounded-full bg-cyan" />
+                    ))}
+                  </div>
+                )}
+                </div>{/* /relative w-full card wrapper */}
 
-              {/* Floating Particles — hidden on mobile to save GPU compositing */}
-              <div className="hidden sm:block">
-                <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-cyan rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2s' }}></div>
-                <div className="absolute top-3/4 right-1/4 w-2.5 h-2.5 bg-red rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}></div>
-                <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-orange rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '3s', animationDelay: '1s' }}></div>
-                <div className="absolute top-1/3 right-1/5 w-1.5 h-1.5 bg-lightCyan rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2.2s', animationDelay: '0.3s' }}></div>
-                <div className="absolute bottom-1/3 left-1/5 w-1.5 h-1.5 bg-lightRed rounded-full animate-particle shadow-cyanShadow" style={{ animationDuration: '2.8s', animationDelay: '0.7s' }}></div>
-              </div>
-
-              {/* Ripple rings removed */}
-            </div>
-
-            {/* Background glow effects removed */}
+              </div>{/* /flex-col float wrapper */}
+            </div>{/* /outer positioning wrapper */}
           </div>
+
+
         </div>
       </div>
     </section>

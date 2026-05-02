@@ -198,12 +198,18 @@ Sent from your portfolio contact form`;
                 onMouseEnter={(e) => handleMouseEnter(e, `contact-${index}`)}
                 onMouseMove={(e) => handleMouseMove(e, `contact-${index}`)}
                 onMouseLeave={(e) => handleMouseLeave(e, `contact-${index}`)}
-                className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 transition-all duration-500 hover:shadow-lg group cursor-pointer relative overflow-hidden animate-text-reveal ${hoverClasses}`}
+                className={`p-6 sm:p-8 rounded-2xl border border-white/[0.05] transition-all duration-500 hover:shadow-lg group cursor-pointer relative overflow-hidden animate-text-reveal ${hoverClasses}`}
                 style={{
                   animationDelay: `${(index + 1) * 200}ms`,
-                  transformStyle: 'preserve-3d'
+                  transformStyle: 'preserve-3d',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.015) 0%, rgba(14,22,45,0.07) 50%, rgba(255,255,255,0.01) 100%)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
                 }}
               >
+                {/* Inner glass top-edge highlight */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/[0.05] to-transparent rounded-t-2xl" />
                 {/* Contact Icon */}
                 <div className="text-center mb-6">
                   <div className={`w-14 h-14 min-[480px]:w-16 min-[480px]:h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-r from-${contact.color} to-${contact.color}/80 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 p-2 min-[480px]:p-3 flex-shrink-0`}>
@@ -280,7 +286,16 @@ Sent from your portfolio contact form`;
           </div>
 
           {/* Contact Form Details */}
-          <div className="w-full bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 hover:border-cyan/30 transition-all duration-500 hover:shadow-lg hover:shadow-cyan/10 group relative overflow-hidden animate-text-reveal delay-1000 order-1 lg:order-2">
+          <div className="w-full p-6 sm:p-8 rounded-2xl border border-white/[0.05] hover:border-cyan/30 transition-all duration-500 hover:shadow-lg hover:shadow-cyan/10 group relative overflow-hidden animate-text-reveal delay-1000 order-1 lg:order-2"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.015) 0%, rgba(14,22,45,0.07) 50%, rgba(255,255,255,0.01) 100%)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+            }}
+          >
+            {/* Inner glass top-edge highlight */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/[0.05] to-transparent rounded-t-2xl" />
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 text-center relative z-20">
               Send me a Message
             </h3>

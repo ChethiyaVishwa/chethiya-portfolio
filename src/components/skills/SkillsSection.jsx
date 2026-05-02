@@ -130,10 +130,18 @@ const SkillsSection = () => {
                 onMouseEnter={(e) => handleMouseEnter(e, `skill-${categoryIndex}`)}
                 onMouseMove={(e) => handleMouseMove(e, `skill-${categoryIndex}`)}
                 onMouseLeave={(e) => handleMouseLeave(e, `skill-${categoryIndex}`)}
-                className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 transition-all duration-500 hover:shadow-lg relative overflow-hidden group ${hoverColorClasses}`}
+                className={`p-6 sm:p-8 rounded-2xl border border-white/[0.05] transition-all duration-500 hover:shadow-xl relative overflow-hidden group ${hoverColorClasses}`}
                 // ✅ PERF: preserve-3d forces an entire GPU layer even without tilt on touch
-                style={{ transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d' }}
+                style={{
+                  transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.015) 0%, rgba(14,22,45,0.07) 50%, rgba(255,255,255,0.01) 100%)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                }}
               >
+                {/* Inner glass top-edge highlight */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/[0.05] to-transparent rounded-t-2xl" />
                 {/* Category Header */}
                 <div className="flex items-center mb-6">
                   <div className={`w-3 h-3 rounded-full bg-${category.color} mr-3 ${isCoarsePointer ? '' : 'animate-pulse'}`}></div>
@@ -186,13 +194,17 @@ const SkillsSection = () => {
                 onMouseEnter={(e) => handleMouseEnter(e, `tool-${index}`)}
                 onMouseMove={(e) => handleMouseMove(e, `tool-${index}`)}
                 onMouseLeave={(e) => handleMouseLeave(e, `tool-${index}`)}
-                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 px-4 sm:px-6 py-3 sm:py-4 rounded-xl border border-gray-700/50 hover:border-cyan/40 transition-shadow duration-300 hover:shadow-lg hover:shadow-cyan/20 group cursor-pointer relative"
+                className="px-4 sm:px-6 py-3 sm:py-4 rounded-xl border border-white/[0.05] hover:border-cyan/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan/20 group cursor-pointer relative"
                 style={{
                   animationDelay: `${1200 + (index * 100)}ms`,
-                  // ✅ PERF: preserve-3d is pointless on touch
-                  transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d'
+                  transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.015) 0%, rgba(14,22,45,0.07) 60%, rgba(255,255,255,0.01) 100%)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
                 }}
               >
+                {/* Top edge shine */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-xl" />
                 <div className="flex items-center space-x-2 sm:space-x-3" style={{ transform: 'translateZ(10px)' }}>
                   <img
                     src={tool.icon}

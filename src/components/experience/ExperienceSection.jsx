@@ -243,13 +243,18 @@ const ExperienceSection = () => {
                 onMouseEnter={(e) => handleMouseEnter(e, exp.id)}
                 onMouseMove={(e) => handleMouseMove(e, exp.id)}
                 onMouseLeave={(e) => handleMouseLeave(e, exp.id)}
-                className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 p-6 sm:p-8 rounded-2xl border border-gray-700/50 hover:border-${exp.color}/30 transition-all duration-500 hover:shadow-lg hover:shadow-${exp.color}/10 group relative overflow-hidden animate-text-reveal`}
+                className={`p-6 sm:p-8 rounded-2xl border border-white/[0.05] hover:border-${exp.color}/30 transition-all duration-500 hover:shadow-lg hover:shadow-${exp.color}/10 group relative overflow-hidden animate-text-reveal`}
                 style={{
                   animationDelay: `${(index + 1) * 200}ms`,
-                  // ✅ PERF: preserve-3d is pointless (and costly) on touch — skip it
-                  transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d'
+                  transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.015) 0%, rgba(14,22,45,0.07) 50%, rgba(255,255,255,0.01) 100%)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
                 }}
               >
+                {/* Inner glass top-edge highlight */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/[0.05] to-transparent rounded-t-2xl" />
                 {/* Experience Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                   <div>
@@ -329,13 +334,18 @@ const ExperienceSection = () => {
                   onMouseEnter={(e) => handleMouseEnter(e, `proj-${project.id}`)}
                   onMouseMove={(e) => handleMouseMove(e, `proj-${project.id}`)}
                   onMouseLeave={(e) => handleMouseLeave(e, `proj-${project.id}`)}
-                  className={`bg-gradient-to-br from-gray-800/60 via-gray-900/60 to-gray-800/60 rounded-2xl border border-gray-700/50 transition-all duration-500 hover:shadow-lg group relative overflow-hidden animate-text-reveal ${hoverClasses}`}
+                  className={`rounded-2xl border border-white/[0.05] transition-all duration-500 hover:shadow-lg group relative overflow-hidden animate-text-reveal ${hoverClasses}`}
                   style={{
                     animationDelay: `${1200 + (index * 200)}ms`,
-                    // ✅ PERF: preserve-3d is pointless (and costly) on touch — skip it
-                    transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d'
+                    transformStyle: isCoarsePointer ? 'flat' : 'preserve-3d',
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.015) 0%, rgba(14,22,45,0.07) 50%, rgba(255,255,255,0.01) 100%)',
+                    backdropFilter: 'blur(8px)',
+                    WebkitBackdropFilter: 'blur(8px)',
                   }}
                 >
+                  {/* Inner glass top-edge highlight */}
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent z-10" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/[0.05] to-transparent rounded-t-2xl z-10" />
                   {/* Project Image/Video */}
                   <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl">
                     {/* ✅ PERF: on coarse/touch devices skip all autoPlay videos entirely.

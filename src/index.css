@@ -9,12 +9,16 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  height: auto;
   overflow-x: hidden;
 }
 
 body {
   background-color: #000000;
 }
+
+
+
 
 /* Cursor water-bubble trail (global) */
 .cursor-bubbles {
@@ -60,8 +64,12 @@ body {
     transform: translateY(0px);
   }
 
-  50% {
-    transform: translateY(-10px);
+  45% {
+    transform: translateY(-14px);
+  }
+
+  75% {
+    transform: translateY(-7px);
   }
 }
 
@@ -137,6 +145,218 @@ body {
   animation: particle-float 4s ease-in-out infinite;
 }
 
+/* ── Image section: rotation-free modern animations ─────────────────── */
+
+/* Gradient border breathe — shifts background-position, zero rotation */
+@keyframes border-breathe {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+  }
+
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
+
+/* Top-to-bottom shimmer sweep */
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateY(-130%);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.55;
+  }
+
+  70% {
+    opacity: 0.22;
+  }
+
+  100% {
+    transform: translateY(230%);
+    opacity: 0;
+  }
+}
+
+/* Halo ring — scale + fade, no rotation */
+@keyframes halo-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  65% {
+    transform: scale(1.4);
+    opacity: 0.1;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Ambient glow blob breathe */
+@keyframes blob-breathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 0.7;
+  }
+}
+
+.animate-border-breathe {
+  background-size: 300% 300%;
+  animation: border-breathe 4s ease-in-out infinite;
+}
+
+.animate-shimmer-sweep {
+  animation: shimmer-sweep 4s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+.animate-halo-pulse {
+  animation: halo-pulse 2.8s ease-out infinite;
+}
+
+.animate-blob-breathe {
+  animation: blob-breathe 5s ease-in-out infinite;
+}
+
+/* ── Developer card image: neon-edge, chip-drift, status-ping ── */
+
+/* Neon edge lines pulse */
+@keyframes neon-edge-pulse {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    filter: blur(0px);
+  }
+
+  50% {
+    opacity: 1;
+    filter: blur(1px);
+  }
+}
+
+/* Chip drift — gentle Y float for floating skill tags */
+@keyframes chip-drift {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Chip orbit — free-floating X+Y motion for orbital chips */
+@keyframes chip-orbit {
+  0% {
+    transform: translate(0px, 0px);
+  }
+
+  25% {
+    transform: translate(4px, -7px);
+  }
+
+  50% {
+    transform: translate(0px, -12px);
+  }
+
+  75% {
+    transform: translate(-4px, -7px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+.animate-chip-orbit {
+  animation: chip-orbit 4s ease-in-out infinite;
+}
+
+
+/* Status dot ping */
+@keyframes status-ping {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  75%,
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Colour splash breathe behind image */
+@keyframes splash-breathe {
+
+  0%,
+  100% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: scaleX(1.1) scaleY(1.12);
+    opacity: 0.8;
+  }
+}
+
+.animate-neon-edge-pulse {
+  animation: neon-edge-pulse 2.5s ease-in-out infinite;
+}
+
+.animate-chip-drift {
+  animation: chip-drift 3s ease-in-out infinite;
+}
+
+.animate-status-ping {
+  animation: status-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Solid dot blink — sharp on/off */
+@keyframes dot-blink {
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+.animate-dot-blink {
+  animation: dot-blink 1.2s ease-in-out infinite;
+  background-color: #4ade80;
+  /* green-400 exact hex — prevents Tailwind purge */
+}
+
+.animate-splash-breathe {
+  animation: splash-breathe 5s ease-in-out infinite;
+}
+
 /* Modern Animation Styles */
 @keyframes morphing {
 
@@ -201,18 +421,18 @@ body {
   0%,
   100% {
     text-shadow:
-      0 0 5px #06b6d4,
-      0 0 10px #06b6d4,
-      0 0 15px #06b6d4,
-      0 0 20px #06b6d4;
+      0 0 2px rgba(0, 0, 0, 0.85),
+      0 0 4px #06b6d4,
+      0 0 10px rgba(6, 182, 212, 0.7),
+      0 0 18px rgba(6, 182, 212, 0.4);
   }
 
   50% {
     text-shadow:
-      0 0 10px #06b6d4,
-      0 0 20px #06b6d4,
-      0 0 30px #06b6d4,
-      0 0 40px #06b6d4;
+      0 0 2px rgba(0, 0, 0, 0.85),
+      0 0 6px #06b6d4,
+      0 0 14px rgba(6, 182, 212, 0.75),
+      0 0 24px rgba(6, 182, 212, 0.45);
   }
 }
 
@@ -320,10 +540,10 @@ body {
 .animate-neon-glow {
   animation: none;
   text-shadow:
-    0 0 5px #06b6d4,
-    0 0 10px #06b6d4,
-    0 0 15px #06b6d4,
-    0 0 25px rgba(6, 182, 212, 0.6);
+    0 0 2px rgba(0, 0, 0, 0.85),
+    0 0 4px #06b6d4,
+    0 0 10px rgba(6, 182, 212, 0.7),
+    0 0 18px rgba(6, 182, 212, 0.4);
 }
 
 .animate-matrix-rain {
@@ -396,12 +616,24 @@ body {
    Using calc()+px is more reliable than percentage on mobile browsers where
    width:max-content on a flex container may compute incorrectly. */
 @-webkit-keyframes ticker-scroll {
-  0%   { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
-  100% { -webkit-transform: var(--ticker-transform, translate3d(-50%, 0, 0)); }
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    -webkit-transform: var(--ticker-transform, translate3d(-50%, 0, 0));
+  }
 }
+
 @keyframes ticker-scroll {
-  0%   { transform: translate3d(0, 0, 0); }
-  100% { transform: var(--ticker-transform, translate3d(-50%, 0, 0)); }
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: var(--ticker-transform, translate3d(-50%, 0, 0));
+  }
 }
 
 /* .ticker-track — intentionally NOT named animate-* so existing kill-lists skip it. */
@@ -422,9 +654,15 @@ body {
 
 /* Keep the old marquee rule for any other potential callers */
 @keyframes marquee {
-  0%   { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
+
 .animate-marquee {
   width: max-content;
   animation: marquee 25s linear infinite;
@@ -676,7 +914,6 @@ body {
   /* 1. Kill expensive CSS animations that run in infinite loops.
         These are pure GPU waste when there's no hover interaction. */
   .animate-particle,
-  .animate-float,
   .animate-morphing,
   .animate-liquid-morph,
   .animate-hologram,
@@ -725,11 +962,33 @@ body {
    NOTE: avoid 'paint' containment — it clips Spline WebGL canvas on mobile Chrome/Safari */
 section {
   contain: layout;
+  /* Promote each section to its own compositor layer for smoother scroll */
+  will-change: transform;
+  /* Ensure sections are on GPU layer during scroll */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* ── Smooth-scroll anchor offset (accounts for fixed navbar) ── */
+[id] {
+  scroll-margin-top: 80px;
+}
+
+/* ── Scroll snap for section-level snapping on desktop ── */
+@media (min-width: 1024px) {
+  main {
+    scroll-snap-type: y proximity;
+  }
+
+  section {
+    scroll-snap-align: start;
+  }
 }
 
 /* ✅ PERF: On very small screens (phones) skip backdrop-blur on navbar entirely
    The pill navbar background already provides enough contrast */
 @media (max-width: 480px) {
+
   .backdrop-blur-md,
   .backdrop-blur-sm,
   [class*="backdrop-blur"] {
@@ -742,6 +1001,7 @@ section {
    Kills CSS animations but NOT transitions — transitions drive the title
    fade-in/out and other UX feedback that should still work. */
 @media (prefers-reduced-motion: reduce) {
+
   /* Kill infinite decorative animations */
   *,
   *::before,
@@ -774,11 +1034,44 @@ section {
     -webkit-animation-iteration-count: infinite !important;
     animation-iteration-count: infinite !important;
   }
+
+  /* ✅ TECH LABELS EXCEPTION: explicitly allow orbital chips and main float to animate even on mobile power-saving */
+  .animate-chip-orbit {
+    -webkit-animation-duration: var(--orbit-dur, 4s) !important;
+    animation-duration: var(--orbit-dur, 4s) !important;
+    -webkit-animation-delay: var(--orbit-delay, 0s) !important;
+    animation-delay: var(--orbit-delay, 0s) !important;
+    -webkit-animation-iteration-count: infinite !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  .animate-float {
+    -webkit-animation-duration: 6s !important;
+    animation-duration: 6s !important;
+    -webkit-animation-iteration-count: infinite !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  /* ✅ STATUS BADGE EXCEPTION: allow status dots to blink */
+  .animate-status-ping {
+    -webkit-animation-duration: 1.5s !important;
+    animation-duration: 1.5s !important;
+    -webkit-animation-iteration-count: infinite !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  .animate-dot-blink {
+    -webkit-animation-duration: 1.2s !important;
+    animation-duration: 1.2s !important;
+    -webkit-animation-iteration-count: infinite !important;
+    animation-iteration-count: infinite !important;
+  }
 }
 
 /* ✅ PERF: Limit expensive filter (blur) on low-end mobile.
    Targets elements that still carry blur on mobile screens. */
 @media (pointer: coarse) and (max-width: 768px) {
+
   /* The glass card frame in HomeSection has backdrop-blur-2xl — reduce it */
   .backdrop-blur-2xl {
     backdrop-filter: blur(6px) !important;
@@ -788,12 +1081,63 @@ section {
   /* Neon glow on heading text: expensive text-shadow on mobile — simplify */
   .animate-neon-glow {
     text-shadow:
-      0 0 5px #06b6d4,
-      0 0 12px rgba(6, 182, 212, 0.5) !important;
+      0 0 2px rgba(0, 0, 0, 0.85),
+      0 0 4px #06b6d4,
+      0 0 10px rgba(6, 182, 212, 0.5) !important;
   }
 
   /* translateZ trick on About card children causes extra compositing layers */
   [style*="translateZ"] {
     transform: none !important;
+  }
+
+  /* ── Mobile: remove will-change from sections to save GPU memory ── */
+  section {
+    will-change: auto;
+    transform: none;
+    -webkit-transform: none;
+  }
+}
+
+/* ── Scrollbar styling — modern glowing scrollbar ── */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #06b6d4 0%, #ff4d4d 100%);
+    border-radius: 9999px;
+    box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #22d3ee 0%, #ff6b6b 100%);
+    box-shadow: 0 0 14px rgba(6, 182, 212, 0.9), 0 0 6px rgba(255, 77, 77, 0.5);
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #06b6d4 transparent;
+  }
+}
+
+/* ── Hide scrollbar completely on mobile / touch devices ── */
+@media (pointer: coarse) {
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+  }
+
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 }

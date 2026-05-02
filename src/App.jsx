@@ -1,5 +1,6 @@
 import './App.css'
-import { useMemo, lazy, Suspense } from 'react';
+import { useMemo, lazy, Suspense, useState } from 'react';
+import LoadingScreen from './components/common/LoadingScreen';
 import NavbarMain from './components/navbar/NavbarMain';
 import HomeSection from './components/home/HomeSection';
 import TextTickerDivider from './components/common/TextTickerDivider';
@@ -23,14 +24,16 @@ const isTouchDevice = () =>
   (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
 
 function App() {
-  // Memoize so it doesn't recompute on every render
   const isTouch = useMemo(() => isTouchDevice(), []);
+  const [loadingDone, setLoadingDone] = useState(false);
 
   return (
     <>
+      {/* Loading screen — renders on top until animation completes */}
+      {!loadingDone && <LoadingScreen onDone={() => setLoadingDone(true)} />}
+
       <main className="font-body w-full">
         <GlobalBackground />
-        {/* Disable cursor bubbles entirely on touch devices — no mouse = pure wasted RAF loop */}
         {!isTouch && <CursorBubbles />}
         <NavbarMain />
         <HomeSection />
@@ -57,3 +60,4 @@ function App() {
 }
 
 export default App
+

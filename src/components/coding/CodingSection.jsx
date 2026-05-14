@@ -110,10 +110,10 @@ const CodingSection = () => {
   const activeVid = VIDEOS.find((v) => v.id === activeId);
   const base = import.meta.env.BASE_URL;
 
-  // ── Play / pause based on viewport visibility ──────────────────────────────
+  // ── Play / pause based on viewport visibility (all devices) ─────────────────
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || isCoarsePointer) return; // mobile: no autoplay at all
+    if (!section) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -134,9 +134,8 @@ const CodingSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  // ── Load first video src on mount (desktop only) ───────────────────────────
+  // ── Load first video src on mount (all devices) ──────────────────────────────
   useEffect(() => {
-    if (isCoarsePointer) return;
     const vid = videoRef.current;
     if (!vid) return;
     vid.src = `${base}${VIDEOS[0].src}`;
@@ -149,7 +148,6 @@ const CodingSection = () => {
     (id) => {
       if (id === activeId) return;
       setActiveId(id);
-      if (isCoarsePointer) return; // mobile: nothing to swap
       const newVid = VIDEOS.find((v) => v.id === id);
       swapVideoSrc(videoRef.current, `${base}${newVid.src}`);
     },
@@ -162,9 +160,14 @@ const CodingSection = () => {
       ref={sectionRef}
       className="relative py-20 sm:py-28 px-4 overflow-hidden bg-transparent"
     >
-      {/* ── Background glows (desktop only — cheap static divs) ── */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan/5 rounded-full blur-3xl pointer-events-none hidden sm:block" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-red/5 rounded-full blur-3xl pointer-events-none hidden sm:block" />
+      {/* ── Background Overlay — matches About / Skills sections ── */}
+      <div className="absolute inset-0 bg-gradient-to-l from-red/5 via-transparent to-cyan/5" />
+      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-gray-700/10 to-transparent" />
+
+      {/* ── Decorative blur orbs — hidden on mobile to save composite layers ── */}
+      <div className="hidden sm:block absolute top-20 left-20 w-64 h-64 bg-cyan/8 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden sm:block absolute bottom-20 right-20 w-80 h-80 bg-red/8 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-cyan/5 to-red/5 rounded-full blur-2xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
 
@@ -184,7 +187,7 @@ const CodingSection = () => {
         </div>
 
         {/* ── Tab Switcher ── */}
-        <div className="flex justify-center gap-4 mb-10">
+        <div className="flex gap-3 mb-10 w-full max-w-sm mx-auto sm:max-w-none sm:justify-center sm:w-auto">
           {VIDEOS.map((v) => {
             const isActive = activeId === v.id;
             const activeStyle =
@@ -200,7 +203,7 @@ const CodingSection = () => {
                 key={v.id}
                 onClick={() => handleSwitch(v.id)}
                 className={[
-                  'px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide border transition-all duration-300',
+                  'flex-1 min-w-0 px-3 py-2 text-xs sm:flex-none sm:px-6 sm:py-2.5 sm:text-sm rounded-full font-semibold tracking-wide border transition-all duration-300 text-center whitespace-nowrap',
                   isActive ? activeStyle : idleStyle,
                 ].join(' ')}
               >
@@ -236,46 +239,16 @@ const CodingSection = () => {
               {/* Top edge highlight */}
               <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent z-10" />
 
-              {/* ── MOBILE: static gradient placeholder (no video decode) ── */}
-              {isCoarsePointer ? (
-                <div
-                  className={`w-full aspect-video flex items-center justify-center ${
-                    activeVid.color === 'cyan'
-                      ? 'bg-gradient-to-br from-cyan/20 via-gray-900 to-gray-800'
-                      : 'bg-gradient-to-br from-red/20 via-gray-900 to-gray-800'
-                  }`}
-                >
-                  <div className="text-center space-y-4 px-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.2"
-                      className={`w-16 h-16 mx-auto ${
-                        activeVid.color === 'cyan' ? 'text-cyan/70' : 'text-red/70'
-                      }`}
-                    >
-                      <polyline points="16 18 22 12 16 6" />
-                      <polyline points="8 6 2 12 8 18" />
-                    </svg>
-                    <p className="text-white/50 text-sm tracking-wide">
-                      {activeVid.label}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                /* ── DESKTOP: single <video> — only 1 decode at a time ── */
-                <video
-                  ref={videoRef}
-                  loop
-                  muted
-                  playsInline
-                  preload="none"        // don't pre-buffer until visible
-                  className="w-full aspect-video object-cover"
-                  style={{ willChange: 'transform' }} // GPU hint
-                />
-              )}
+              {/* ── Single <video> for all devices — muted + playsInline required for mobile autoplay ── */}
+              <video
+                ref={videoRef}
+                loop
+                muted
+                playsInline
+                preload="none"
+                className="w-full aspect-video object-cover"
+                style={{ willChange: 'transform' }}
+              />
 
               {/* Colour overlay on hover */}
               <div
@@ -289,9 +262,9 @@ const CodingSection = () => {
               {/* Bottom label bar */}
               <div className="absolute bottom-0 left-0 right-0 px-5 py-3 flex items-center gap-2 bg-black/40 backdrop-blur-sm border-t border-white/[0.06] z-10">
                 <div
-                  className={`w-2 h-2 rounded-full ${
-                    isCoarsePointer ? '' : 'animate-pulse'
-                  } ${activeVid.color === 'cyan' ? 'bg-cyan' : 'bg-red'}`}
+                  className={`w-2 h-2 rounded-full animate-pulse ${
+                    activeVid.color === 'cyan' ? 'bg-cyan' : 'bg-red'
+                  }`}
                 />
                 <span className="text-white/80 text-xs sm:text-sm font-medium tracking-wide">
                   {activeVid.label}
@@ -387,17 +360,7 @@ const CodingSection = () => {
           </div>
         </div>
 
-        {/* ── Preview strip — static thumbnails, zero video decode ── */}
-        <div className="hidden lg:grid grid-cols-2 gap-6 mt-12">
-          {VIDEOS.map((v) => (
-            <VideoThumb
-              key={v.id}
-              vid={v}
-              isActive={activeId === v.id}
-              onClick={() => handleSwitch(v.id)}
-            />
-          ))}
-        </div>
+
       </div>
     </section>
   );

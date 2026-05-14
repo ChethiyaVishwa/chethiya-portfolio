@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import gsap from 'gsap';
 import { useTilt } from '../../hooks/useTilt';
 
@@ -43,12 +43,20 @@ const StaticProjectPoster = ({ project }) => {
   return (
     <div className={`absolute inset-0 bg-gradient-to-br ${PROJECT_GRADIENTS[project.id] ?? 'from-gray-700 to-gray-800'} flex items-center justify-center`}>
       <div className="text-center">
-        <div className="text-4xl sm:text-5xl mb-2">🚀</div>
-        <p className="text-white/70 text-sm">{project.name}</p>
+        <p className="text-white/70 text-sm font-medium tracking-wide uppercase">{project.name}</p>
       </div>
     </div>
   );
 };
+
+// ─── Category definitions (order matters for button display) ───────────────
+const CATEGORIES = [
+  { id: 'all',        label: 'All Projects',        color: 'cyan' },
+  { id: 'fullstack',  label: 'Full Stack Web',       color: 'red'  },
+  { id: 'enterprise', label: 'Enterprise',           color: 'cyan' },
+  { id: 'react',      label: 'React & Modern Stack', color: 'red'  },
+  { id: 'realtime',   label: 'Real-Time & Utility',  color: 'cyan' },
+];
 
 const ExperienceSection = () => {
   const { handleMouseEnter, handleMouseMove, handleMouseLeave } = useTilt({
@@ -56,30 +64,32 @@ const ExperienceSection = () => {
     scale: 1.02
   });
 
+  const [activeCategory, setActiveCategory] = useState('all');
+
   const experiences = [
     {
       id: 1,
-      title: "Full Stack Web Developer",
-      company: "Adventure Travel",
+      title: "Co-Founder & Full Stack Developer",
+      company: "Navora Lanka Travel",
       location: "Sri Lanka",
-      period: "2025 - Present",
-      type: "Own business",
-      description: "Developing and maintaining web applications for travel management system. Working with modern web technologies to create user-friendly interfaces and robust backend systems.",
+      period: "2026 - Present",
+      type: "Family Business",
+      description: "Co-founded and digitally transformed a family-owned travel business. Designed and developed the full company website from scratch, managed all social media channels, and handled end-to-end operations including tour packages and vehicle fleet management.",
       technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "PHP", "MySQL"],
       achievements: [
-        "Developed responsive web applications for travel booking system",
-        "Implemented user authentication and data management features",
-        "Optimized database queries improving performance by 30%",
-        "Collaborated with team to deliver projects on time"
+        "Designed & developed the full company website from scratch",
+        "Managed all social media channels and digital marketing strategy",
+        "Handled end-to-end tour package and vehicle fleet management",
+        "Implemented booking system with user authentication & admin dashboard"
       ],
       color: "cyan"
     },
     {
       id: 2,
-      title: "Intern Full Stack Software Engineer",
+      title: "Intern Software Engineer",
       company: "SLT Mobitel",
       location: "Sri Lanka",
-      period: "2024 - 2025",
+      period: "2025",
       type: "Internship",
       description: "Gained hands-on experience in full stack software engineering through internship program. Worked on real-world projects including management systems and product information hubs.",
       technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "PHP", "MySQL"],
@@ -96,6 +106,7 @@ const ExperienceSection = () => {
   const projects = [
     {
       id: 9,
+      category: 'react',
       name: "Enterprise Resource Planning (ERP) System",
       description: "A scalable ERP system for SMEs and large enterprises, unifying inventory, sales, and HR management with real-time dashboards, role-based access, and automated reporting — built to fit any industry. Powered by React, Node.js, and MySQL for a fast, reliable, and modern experience.",
       image: "/images/online_erp.jpg",
@@ -116,18 +127,20 @@ const ExperienceSection = () => {
     },
     {
       id: 8,
+      category: 'realtime',
       name: "Media Converter Web App",
       description: "A modern, browser-based media conversion platform supporting multiple formats, built with performance, privacy, and UX in mind. All processing runs entirely on the client using FFmpeg.wasm + WebAssembly, with no server-side uploads.",
       image: "/images/media-converter.jpg",
       technologies: ["React", "Vite", "FFmpeg.wasm", "WebAssembly", "JavaScript (ES6+)", "GSAP", "HTML5", "CSS3"],
-      features: ["MP4 → MP3", "MP3 → WAV", "WAV → MP3", "Video → GIF", "MP4 → WebM", "Video Compression", "Client-side processing", "Fully responsive UI"],
+      features: ["MP4 to MP3", "MP3 to WAV", "WAV to MP3", "Video to GIF", "MP4 to WebM", "Video Compression", "Client-side processing", "Fully responsive UI"],
       github: "#",
       live: "https://chethiyavishwa.github.io/mp4-to-mp3-converter/",
       color: "red"
     },
     {
       id: 1,
-      name: "Adventure Travel",
+      category: 'fullstack',
+      name: "Navora Lanka Travel",
       description: "A modern travel agency website with fully responsive design and comprehensive admin management system. Features complete tour package management, vehicle booking, destination guides, and real-time customer support with advanced AI integration.",
       image: "/images/adventure-travel.jpg",
       technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "MySQL", "PHP", "PHPMailer", "API Integration", "AI Chatbase"],
@@ -138,6 +151,7 @@ const ExperienceSection = () => {
     },
     {
       id: 2,
+      category: 'fullstack',
       name: "Sirasa Oil Centre",
       description: "A modern oil mart website with fully responsive design and comprehensive admin management system. Features complete oil brand management, product catalog, and streamlined business operations for oil distribution.",
       image: "/images/sirasa-oil.jpg",
@@ -149,6 +163,7 @@ const ExperienceSection = () => {
     },
     {
       id: 3,
+      category: 'fullstack',
       name: "NIMZY Fashion Store",
       description: "A modern clothing store website with fully responsive design and comprehensive admin management system. Features complete product management, inventory control, and streamlined e-commerce operations for fashion retail.",
       image: "/images/nimzy-fashion.jpg",
@@ -160,6 +175,7 @@ const ExperienceSection = () => {
     },
     {
       id: 4,
+      category: 'enterprise',
       name: "SLT Mobitel Intern Management System",
       description: "A comprehensive management system for SLT Mobitel internship program, built with modern web technologies for efficient intern tracking and management.",
       image: "/images/project1.jpg",
@@ -171,6 +187,7 @@ const ExperienceSection = () => {
     },
     {
       id: 5,
+      category: 'enterprise',
       name: "SLT Mobitel Product Info Hub",
       description: "A centralized information hub for SLT Mobitel products and services, providing detailed product information and specifications to customers.",
       image: "/images/project2.jpg",
@@ -182,6 +199,7 @@ const ExperienceSection = () => {
     },
     {
       id: 6,
+      category: 'react',
       name: "Movie Ticket Booking System",
       description: "A full-stack movie ticket booking application with user authentication, seat selection, and payment processing capabilities.",
       image: "/images/project3.jpg",
@@ -193,6 +211,7 @@ const ExperienceSection = () => {
     },
     {
       id: 7,
+      category: 'realtime',
       name: "End-to-End Chat Application",
       description: "A real-time chat application with security features, built using React and Firebase for seamless communication.",
       image: "/images/project4.jpg",
@@ -203,6 +222,10 @@ const ExperienceSection = () => {
       color: "cyan"
     }
   ];
+
+  const filteredProjects = activeCategory === 'all'
+    ? projects
+    : projects.filter(p => p.category === activeCategory);
 
   return (
     <section id="experience" className="min-h-screen flex items-center px-4 py-16 sm:py-20 md:py-24 bg-transparent relative overflow-hidden">
@@ -317,12 +340,38 @@ const ExperienceSection = () => {
 
         {/* Projects Section */}
         <div>
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-12 text-center animate-text-reveal delay-1000">
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center animate-text-reveal delay-1000">
             Featured Projects
           </h3>
 
+          {/* ─── Category Filter Bar ─────────────────────────────────── */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {CATEGORIES.map(cat => {
+              const isActive = activeCategory === cat.id;
+              const c = cat.color; // 'cyan' | 'red'
+              const activeClass = c === 'cyan'
+                ? 'bg-gradient-to-r from-cyan to-cyan/70 text-black border-cyan shadow-lg shadow-cyan/25 scale-105'
+                : 'bg-gradient-to-r from-red to-red/70  text-white border-red  shadow-lg shadow-red/25  scale-105';
+              const idleClass = c === 'cyan'
+                ? 'bg-transparent text-white/60 border-white/20 hover:border-cyan/60 hover:text-cyan hover:scale-105'
+                : 'bg-transparent text-white/60 border-white/20 hover:border-red/60  hover:text-red  hover:scale-105';
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={[
+                    'px-5 py-2 rounded-full text-sm font-semibold tracking-wide border transition-all duration-300',
+                    isActive ? activeClass : idleClass,
+                  ].join(' ')}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10">
-            {projects.map((project, index) => {
+            {filteredProjects.map((project, index) => {
               const hoverClasses =
                 project.color === 'red'
                   ? 'hover:border-red/30 hover:shadow-red/20'
@@ -387,8 +436,7 @@ const ExperienceSection = () => {
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
                         <div className="text-center">
-                          <div className="text-4xl sm:text-5xl mb-2">🚀</div>
-                          <p className="text-white text-sm">Project Preview</p>
+                          <p className="text-white/70 text-sm font-medium tracking-wide uppercase">Project Preview</p>
                         </div>
                       </div>
                     )}
@@ -459,6 +507,13 @@ const ExperienceSection = () => {
                 </div>
               );
             })}
+
+            {/* Empty state */}
+            {filteredProjects.length === 0 && (
+              <div className="col-span-full text-center py-20 text-white/40 text-lg">
+                No projects in this category yet.
+              </div>
+            )}
           </div>
         </div>
       </div>

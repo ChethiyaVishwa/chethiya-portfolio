@@ -13,6 +13,7 @@ const AboutSection = lazy(() => import('./components/about/AboutSection'));
 const SkillsSection = lazy(() => import('./components/skills/SkillsSection'));
 const EducationSection = lazy(() => import('./components/education/EducationSection'));
 const ExperienceSection = lazy(() => import('./components/experience/ExperienceSection'));
+const CodingSection = lazy(() => import('./components/coding/CodingSection'));
 const ContactSection = lazy(() => import('./components/contact/ContactSection'));
 
 // Minimal fallback — avoids layout shift while section JS loads
@@ -43,6 +44,9 @@ function App() {
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <SkillsSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <CodingSection />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <EducationSection />
